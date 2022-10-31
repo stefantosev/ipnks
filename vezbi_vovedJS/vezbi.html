@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        
+        console.log("Zdravo na site")
+
+        // var a = prompt("Vnesi broj")
+        // a = parseInt(a)
+        // var b = 5
+        
+        // var zbir = a+b
+
+        // console.log(a,b)
+        // console.log("Zbirot iznesuva: ", zbir)
+
+        // function Sum(){
+
+        // }
+
+        //---------------------AUD2 ZADACI--------------------
+
+        //ZADACA1: da se najde max megju 2 broja
+        // var br1 = prompt("Vnesi vrednost za prviot: ")
+        // var br2 = prompt("Vnesi vrednost za druziot: ")
+        // br1 = parseInt(br1)
+        // br2 = parseInt(br2)
+        // var max=0
+        
+        // if(br1==br2){
+        //     alert("ALOOOO GASI ODMA")
+        //     document.write("Nema max")
+        // }
+        // else if(br1>br2){
+        //     max = br1
+        //     document.write("Maksimumot iznesuva: ", max)
+        // }else{
+        //     max = br2
+        //      document.write("Maksimumot iznesuva: ", max)
+        // }
+
+
+        //ZADACA2: da se napise dali edna god vnesena e prestapna
+    //     var godina = prompt("Vneseta ja godinata")
+    //     godina = parseInt(godina)
+
+    //    if(!isNaN(godina)){
+    //      if((godina % 4 == 0 && godina % 100 !=0) || godina % 400 ==0){
+    //          //KAKO ????
+    //          document.write(godina + " e prestapna godina")
+    //       }
+    //         else{
+    //             document.write(godina + " ne e prestapna godina")
+
+    //         }
+    //    }else{
+
+    //         document.write("Ne ste vnele cel broj!")
+    //    }
+       
+      
+
+        //ZADACA3: U KOJ KVADRANT SI
+        // var x = prompt("Vnesi X:")
+        // var y = prompt("Vnesi Y:")
+        // x = parseInt(x)
+        // y = parseInt(y)
+
+        // if(x==0 && y==0){
+        //     document.write("Vo sredina si")
+        // }
+        // else if(x>0 && y>0){
+        //     document.write("I kvadrant")
+        // }
+        // else if(x<0 && y>0){
+        //     document.write("II kvadrant")
+        // }
+        // else if(x<0 && y<0){
+        //     document.write("III kvadrant")
+        // }
+        // else if(x>0 && y<0){
+        //     document.write("IV kvadrant")
+        // }
+
+
+        //ZADACA4: OCENKI OD ISPIT
+        // var poeni = prompt("Vnesi poeni")
+        // poeni = parseInt(poeni)
+
+        // if(poeni>=0 && poeni<=50){
+        //     document.write("Nemas polozeno ripbozo :(")
+        // }
+        // else if(poeni>=51 && poeni<=60){
+        //     document.write("Imate 6ka :)")
+        // }
+        // else if(poeni>=61 && poeni<=70){
+        //     document.write("Imate 7ca :)")
+        // }
+        // else if(poeni>=71 && poeni<=80){
+        //     document.write("Imate 8ca :)")
+        // }
+        // else if(poeni>=81 && poeni<=90){
+        //     document.write("Imate 9ka dobro.. :)")
+        // }
+        // else if(poeni>=91 && poeni<=100){
+        //     document.write("IMATE 10KA KAKO BE :D")
+        // }
+        // else{
+        //     document.write("Greni poeni")
+        // }
+
+
+        //ZADACA6: 
+        //Да се напише програма коjа броеви (внесени од
+// тастатура) ´ке го определи броjот на броеви што се
+// деливи со 3, при делењето со 3 имаат остаток 1,
+// односно 2. Броеви се внесуваат се додека корисникот
+// не внесе знак.
+
+    //    var broj = prompt("Vnesi broj")
+    //    broj = parseInt(broj)
+    //    var brojac1=0
+    //    var brojac2=0
+    //    var brojac3=0
+
+    //    while(!isNaN(broj)){
+    //         if(broj % 3 == 0){
+    //             brojac1++
+    //         }
+    //         else if(broj % 3 == 1){
+    //             brojac2++
+    //         }
+    //         else if(broj % 3 == 2){
+    //             brojac3++
+    //         }
+    //         broj = prompt("Vnesi broj")
+    //         broj = parseInt(broj)
+    //    }
+
+    //    document.write("\nVnesovte " + brojac1 + " broevi koi imaat ostatok 0 pri delenje so 3\n")
+    //    document.write("\nVnesovte " + brojac2 + " broevi koi imaat ostatok 1 pri delenje so 3\n")
+    //    document.write("\nVnesovte " + brojac3 + " broevi koi imaat ostatok 2 pri delenje so 3\n")
+
+
+    //ZADACA7:
+    //Да се напише програма коjа од непознат броj на цели
+// броеви кои се внесуваат од тастатура ќе го определи
+// броjот со максимална вредност. Програмата завршува
+// ако наместо броj се внесе знак што не е цифра
+
+    var broj = prompt("Vnesi broj")
+    broj = parseInt(broj)
+    var max = 1
+    
+    while(!isNaN(broj)){
+
+        
+        if(broj > max){
+            max = broj
+        }
+
+
+        var broj = prompt("Vnesi broj")
+        broj = parseInt(broj)
+    }
+
+    document.write("Maksimalniot broj e: " + max)
+
+        
+
+
+
+
+
+        //vezbi so CONFIRM BOX
+        // var stisni = confirm("Stisni deka si peder")
+        // if(stisni == true){
+        //     x = "Golem peder si"
+        // }else{
+        //     x = "Ne si peder"
+        // }
+        // document.write(x)
+
+
+        //vezbi so ALERTBOX
+       // alert("ALOOOO GASI ODMA")
+        
+
+        
+
+    </script>
+
+</head>
+<body>
+
+    <button class="kopce1"  onclick="sum">PRITISNI</button>
+   
+    
+</body>
+</html>
