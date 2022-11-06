@@ -153,23 +153,23 @@
 // броjот со максимална вредност. Програмата завршува
 // ако наместо броj се внесе знак што не е цифра
 
-    var broj = prompt("Vnesi broj")
-    broj = parseInt(broj)
-    var max = 1
+    // var broj = prompt("Vnesi broj")
+    // broj = parseInt(broj)
+    // var max = 1
     
-    while(!isNaN(broj)){
+    // while(!isNaN(broj)){
 
         
-        if(broj > max){
-            max = broj
-        }
+    //     if(broj > max){
+    //         max = broj
+    //     }
 
 
-        var broj = prompt("Vnesi broj")
-        broj = parseInt(broj)
-    }
+    //     var broj = prompt("Vnesi broj")
+    //     broj = parseInt(broj)
+    // }
 
-    document.write("Maksimalniot broj e: " + max)
+    // document.write("Maksimalniot broj e: " + max)
 
         
 
@@ -191,14 +191,49 @@
        // alert("ALOOOO GASI ODMA")
         
 
+       //AUD3 FUNKCII  I CIKLUSI:
+       //zadaca 1 i 2
+        function smeniStyle(){
+                    //document e objekt vo koj go imame ovoj html doc
+            var x = document.getElementById("voved") //ke go vrati tekstot preku ovaa funkcija
+            x.style.fontSize = "35px"
+            x.style.color = "red"
+            x.style.background = "blue"
+           
+            //ako sakame da menueme povekje paragrafi
+            var elementi = document.getElementsByTagName("p")
+            for(var i=0; i<elementi.length; i++){
+                elementi[i].style.background="blue"
+                elementi[i].style.fontSize = "50px"
+           }
+
+            
+        }
+
+        function zemiAttribute(){
+            //zimame sekogas
+            var link = document.getElementById("finki")
+            console.log(link.target)
+            console.log(link.href)
+            console.log(link.hreflang)
+            console.log(link.rel)
+        }
+
         
 
     </script>
 
 </head>
 <body>
+    <p><a id="finki" type="text/html" hreflang="e-us" rel="nofollow" target="_self" href="http://www.w3resource.com/">finki</a></p>
+    <h1>Zdravo!!</h1>
+    <p id="voved">Some text.....</p>
+    <p>Risot Rodninata26</p>
+    <p>ja ukrade drzavata ja isicica cela</p>
+    <p>nie sme mnogu razocharani...</p>
 
-    <button class="kopce1"  onclick="sum">PRITISNI</button>
+    <button  onclick="smeniStyle()">PRITISNI</button>
+    <button onclick="zemiAttribute()">Stiskaj!</button>
    
     
 </body>
