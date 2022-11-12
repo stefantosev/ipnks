@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MobilenBroj</title>
+
+
+    <script>
+        mobilen = prompt("Vnesete mobilen telefon: ")
+
+        console.log(Math.trunc(mobilen/1000)%1000)
+        
+        if(mobilen.length != 8){
+            alert("Ne vnesovte pavilen mobilen")
+        }
+        else{
+            //78/999-666
+            document.write("0" + Math.trunc(mobilen/1000000) + "/" + (Math.trunc(mobilen/1000)%1000) + "-" + Math.trunc(mobilen%1000))
+
+            if(Math.trunc(mobilen/1000000) === 70){
+                document.write(" T-Mobile")
+            }
+            else if(Math.trunc(mobilen/1000000) === 75){
+                document.write(" One")
+            }
+            else if(Math.trunc(mobilen/1000000) === 77 || Math.trunc(mobilen/1000000) === 78){
+                document.write(" Vip")
+            }
+        }
+    </script>
+
+
+</head>
+<body>
+    
+</body>
+</html>
