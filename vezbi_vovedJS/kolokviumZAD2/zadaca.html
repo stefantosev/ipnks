@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ДАТИБАМ-ЗАДАЧАТА</title>
+
+
+    <script>
+
+        function proveri(){
+
+            var cifri = document.getElementById("cifri")
+            
+           
+
+            if(cifri.value.length != 10){
+                alert("Vnesovte gresen broj")
+                return
+            }
+
+            if(isNaN(cifri.value)){
+                alert("Vnesete broj a ne bukvi")
+                return
+            }
+
+            //da se najde dali ima perfekten
+
+            
+            /*var perfekten = document.createElement("p")
+
+            for(var i=0; i<cifri.toString().length; i++){
+                if((parseInt(razdeli[i]%2===0)) && (parseInt(razdeli[i+1]%2===0))){
+                   
+                }
+            }*/
+        }
+
+        function staviLista(){
+
+           
+            var vrednost = document.getElementById("cifri") //da ne se zima value
+
+            if(vrednost.value.length != 10){
+                alert("Vnesovte gresen broj")
+                return
+            }
+
+            var dodaj = document.createElement("li")
+            var lista = document.getElementById("brojki")
+
+            dodaj.innerHTML = vrednost.value
+            vrednost.value = ""  
+            lista.append(dodaj) 
+            
+
+
+
+        }
+
+        function svrti(){
+
+            var niza = document.getElementById("cifri")
+            var niza1 = []
+
+            if(niza.value.length != 10){
+                alert("Vnesovte gresen broj")
+                return
+            }
+
+            var pormenliva = ""
+        
+          for(var i=niza.value.length; i>=0; i--){
+                niza1[i] = niza.value.charAt(i)
+                pormenliva += niza1[i]
+            }
+
+            niza = document.getElementById("cifri").value = pormenliva
+
+        
+            
+
+        }
+
+        function voLevo(){
+           
+            var niza = document.getElementById("cifri")
+
+            if(niza.value.length != 10){
+                alert("Vnesovte gresen broj")
+                return
+            }
+
+            var prva = niza.value.charAt(0)
+            niza.value = niza.value.slice(1,10)
+            niza.value = niza.value + prva
+
+
+        }
+
+
+        function voDesno(){
+
+            var niza = document.getElementById("cifri")
+
+            if(niza.value.length != 10){
+                alert("Vnesovte gresen broj")
+                return
+            }
+
+            var posledna= niza.value.charAt(9)
+            niza.value = niza.value.slice(0,9)   //slicenuva od 0 do 8 bez 9
+            niza.value = niza.value + posledna
+
+        }
+
+
+
+    </script>
+    
+</head>
+
+
+<body>
+
+    <div>
+        <input type="text" id="cifri">
+        <button onclick="voLevo()"><</button>
+        <button onclick="voDesno()">></button>
+        <button onclick="svrti()">FLIP</button>
+        <button onclick="staviLista()">STORE</button>
+        <button onclick="proveri()">CHECK</button>
+    </div>
+
+    <ul id="brojki">
+
+    </ul>
+  
+    
+</body>
+</html>

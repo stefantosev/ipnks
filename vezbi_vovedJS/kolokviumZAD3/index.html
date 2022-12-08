@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЕБАТИ ЗАДАЧАТА</title>
+
+    <script>
+        var global = 0
+        function generiraj(){
+
+            var ime = document.getElementById("name")
+            var prezime = document.getElementById("surname")
+            var tablica = document.getElementById("tablica")
+            var godini = document.getElementById("godini")
+            var da = document.getElementById("yes")
+            var ne = document.getElementById("no")
+
+            //ako ne se site polinja popolneti
+            if(ime.value ==="" || prezime.value ==="" || tablica.value==="" || godini.value==="" || (da.checked === false && ne.checked=== false)){
+                alert("Ве молиме потполнете ги сите полиња!")
+            }
+            
+            //ako ne e validna vrakja alert
+            if(dalieEvalidna(tablica)){
+                alert("Не е валидна таблицата")
+                return 
+            }
+
+            if(isNaN(godini.value)){
+                alert("Внесете валидна година")
+                return
+            }
+
+            if(godini.value <=0){
+                alert("Невалидна година")
+                return
+            }
+
+            var osnovnaCena = 3000
+            if(zlatnaTablica(tablica)){
+                //dodavame 1000 za zlatna tablica
+                osnovnaCena += 1000
+            }
+
+            var soobrakjajki
+            //ako ucestvuval vo soobrakjajka
+            if(yes.checked){
+                osnovnaCena += 500
+                soobrakjajki = "Има"
+            }
+            else if(no.checked){
+                soobrakjajki = "Нема"
+            }
+
+            var pisujLista = document.getElementById("lista")
+            var kartaBatka = document.createElement("div")
+
+            
+
+            kartaBatka.innerHTML = "<p>" + ime.value + " " + prezime.value + "</p>" +
+                                  "<p>" + tablica.value + "</p>" +
+                                  "<p>"  +  "Сообрајќи: " + soobrakjajki + "</p>" +
+                                  "<p>" + "Старост на возило: " + godini.value +"</p>" +
+                                  "<p>" + "За плаќање:  " + osnovnaCena + "</p>" +
+                                  "<button onclick='plati(this)'>Плати</button> <button onclick='brisi(this)'>Избриши</button>"
+
+            kartaBatka.setAttribute("id", "karta")
+           
+            //da ja oboi kartata zelena ili crvena zavisno od godinite
+            if(godini.value > 30){
+                kartaBatka.style.backgroundColor = "red"
+            }
+            else{
+                kartaBatka.style.backgroundColor = "lightgreen"
+            }
+
+            pisujLista.append(kartaBatka) //da se pokaze vo html
+            
+            global++
+            var vk = document.getElementById("smetki")
+            vk.innerHTML = global
+        
+        }
+
+        function dalieEvalidna(tablica){
+            //proverueme dali formatot na tablicata e validen SO REGEX
+            var regex = /^[A-Z][A-Z]-[0-9][0-9][0-9][0-9]-[A-Z][A-Z]$/
+            if(regex.test(tablica.value)){
+                return false
+            }
+            else{
+                return true
+            }
+        }
+
+        function zlatnaTablica(tablica){
+            var razdeli = tablica.value.split("-")
+            var broj = razdeli[1]
+            //site 4 brojki da se isti
+            if(broj[0] === broj[1] && broj[0]===broj[2] && broj[0]===broj[3]){
+                return true
+            }else{
+                return false
+            }
+
+        }
+
+        function brisi(button){
+            var div = button.parentNode
+            div.remove()
+            global--
+            var vk = document.getElementById("smetki")
+            vk.innerHTML = global
+        }
+
+        
+
+
+    </script>
+
+    <style>
+
+         label{
+            display: inline-block;
+            width: 200px;
+            height: 25px;
+        }
+
+        div{
+             margin-bottom: 5px;
+        }
+        h1{
+            text-align: center;
+        }
+
+        #karta{
+            display: inline-block;
+            width: 200px;
+            text-align: center;
+            border: 1px solid;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+    <div><h1>Осигурување на возила</h1></div>
+    <div><label>Име</label> <input type="text" id="name"></div>
+    <div><label>Презиме</label> <input type="text" id="surname"></div> 
+    <div><label>Регистарска таблица </label> <input type="text" id="tablica"></div>
+    <div><label>Години на старост</label> <input type="text" id="godini"></div>
+    <div><label>Сообраќајна незгода</label> <input type="radio" name="soobrakjajki" id="yes">Да <input type="radio" id="no" name="soobrakjajki">Не</div>
+    <div>
+        <input type="button" id="smetka" onclick="generiraj()" value="Генерирај сметка">
+    </div>
+
+    <div> <h2>Сметки</h2> </div>
+    <div><p>Вкупно сметки за плаќање:<span id="smetki"> 0</span></p></div>
+    
+    <ul id="lista">
+
+
+    </ul>
+
+</body>
+</html>

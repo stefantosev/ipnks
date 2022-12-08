@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maraton</title>
+
+    <script>
+        //da borime kolku vkupno potvrdeni ucesnici ima
+        var global = 0
+
+        function dodavaj(){
+            var ime = document.getElementById("name")
+            var prezime= document.getElementById("surname")
+            var godini = document.getElementById("age")
+            var kod = document.getElementById("code")
+            var pol = document.getElementById("pol")
+            
+            //proverka ako ne se vneseni site polinja
+            if(ime.value==="" || prezime.value ==="" || godini.value==="" || kod.value==="" || pol.value===""){
+                alert("Vnesete gi site polinja!")
+                return
+            }
+
+            
+            var tabela = document.getElementById("maraton").getElementsByTagName("tbody")[0]
+            var redici = tabela.insertRow(tabela.redici)
+
+            var cell0 = redici.insertCell(0)
+            var cell1 = redici.insertCell(1)
+            var cell2 = redici.insertCell(2)
+            var cell3 = redici.insertCell(3)
+
+            var novKod = zemiTagot(kod.value)
+            //var vozrast = parseInt(godini.value)
+
+         
+            cell0.innerHTML = ime.value
+            cell1.innerHTML = prezime.value
+            cell2.innerHTML = godini.value
+            cell3.innerHTML = "<button onclick='brisi()'>Избриши</button>" 
+           
+
+            //tabela.append(redici)
+
+           
+
+            global++
+            document.getElementById("vk").innerHTML = global
+            
+            ime.value = prezime.value = godini.value = kod.value = pol.value = ""
+        }
+
+        function zemiTagot(kod){
+            var tag ="";
+            var kod = document.getElementById("code")
+
+            for(var i=0; i<kod.value.length; i++){
+                var cifra = kod.value.charAt(i)
+
+                //da ne gi smeta tie pomali od 5
+                if(cifra>5){
+                    tag+= cifra
+                }
+
+                if(cifra.match("[a-z]")){
+                    tag+= cifra.toUpperCase()
+                }
+                else if(cifra.match("[A-Z]")){
+                    tag+= cifra.toLowerCase()
+                }
+            }
+       
+        }
+
+    </script>
+
+
+    <style>
+        label{
+            width: 200px;
+            display: inline-block;
+            margin-right: 100px;
+            height: 30px;
+        }
+        h1{
+            text-align: center;
+        }
+    
+        table, th , td{
+            border-collapse: collapse;
+            border: 2px solid green;
+            font-weight: bold;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+       
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div><h1>Учесници на маратон</h1></div>
+    <div><label>Име</label> <input type="text" id="name"></div>
+    <div><label>Презиме</label> <input type="text" id="surname"></div>
+    <div><label>Години</label> <input type="text" id="age"></div>
+    <div><label>Код</label> <input type="text" id="code"></div>
+    <div> <label>Пол</label>
+        <select id="pol">
+            <option value="Машки">Машки</option>
+            <option value="Женски">Женски</option>
+         </select>
+    </div>
+    <div><input type="button" id="klik" onclick="dodavaj()" value="Додади"></div>
+    <div>
+        <table id="maraton">
+            <thead>
+             <th>Име</th>
+             <th>Презиме</th>
+             <th>Таг</th>
+             <th>Опции</th>
+            </thead>
+
+            <tbody>
+
+            </tbody>
+
+        </table>
+    </div>
+
+    <div><p>Вкупно потврдени учесници:  <span id="vk">0</span></p></div>
+</body>
+</html>

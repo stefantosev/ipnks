@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vezbanje</title>
+    <link rel="stylesheet" href="aud5.css">
+    
+    <script>
+            //da se napravi funkcija za klik na kopceto prati
+
+            function prati(){
+                var ime = document.getElementById("name").value
+                var prezime = document.getElementById("surname").value
+                var email = document.getElementById("mail")
+                var godini = document.getElementById("age")
+
+                //ako se prazni polinjata alert da pokazue
+                if(ime == "" || prezime == "" || email=="" || godini == ""){
+                    alert("Сите полиња мора да се пополнети")
+                }
+                else{
+                    //ako e se popolneto
+
+                    var tekst = "Господине " + ime + " " + prezime + " дали сте сигурни"
+                    if(confirm(tekst)){
+                        this.document.getElementById("message").value = "Podatocite se uspesno prateni"
+                    }
+                    else{
+                        alert("Податоците не се испратени")
+                    }
+                }
+            }
+
+    </script>
+    
+</head>
+
+<body>
+    <h1>
+        Форма за контакт
+    </h1>
+
+    
+    <div><label>Име</label> <input id="name" type="text"></div>
+    
+    <div><label>Презиме</label> <input id="surname" type="text"></div>
+    
+    <div><label>Емаил</label> <input id="mail" type="text"></div>
+   
+    <div><label>Возраст</label>  
+        <select id="age">
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+        </select>
+    </div>
+
+    <div> <input type="button" id="kopce" onclick="prati();" value="Прати"></div>
+    <input type="text" disabled="disabled" id="message">
+</body>
+</html>

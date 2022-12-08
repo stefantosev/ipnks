@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрирај лет</title>
+
+    <script>
+        function pritisni(){
+
+            var iminja = document.getElementById("podatoci")
+            var letalo = document.getElementById("oznaka")
+            var koordinati = document.getElementById("koordinati")
+            var radius = document.getElementById("radius")
+            var visina = document.getElementById("visina")
+            var tipovi = document.getElementById("tipovi")
+       
+            if( iminja.value =="" || letalo.value=="" || koordinati.value =="" || radius.value =="" || visina.value == "" || tipovi.value ==""){
+                alert("Грешка при внес")
+                return
+            }
+            
+            if(proveriTagOznaka(letalo.value)){
+                alert("Невалидна ознака")
+                return
+            }
+            
+            var parsiranR = parseInt(radius.value)
+            var parsiranaH = parseInt(visina.value)
+
+
+            if(istiBrojki(oznaka.value)){
+                 //da dodavame vo lista ako oznakta kaj letaloto imaat isti brojki
+                 //nema ogranicuvanje za visinata i radiusot
+                var lista = document.getElementById("dodavaj")
+                var listItem = document.createElement("li")
+
+                if(tipovi.value === "Едрилица"){
+                    listItem.style.border = "2px solid black"
+                }
+                else if(tipovi.value === "Дрон"){
+                    if(parsiranR === parsiranaH){
+                        listItem.style.border = "2px solid black"
+                    }
+
+                }
+                
+                //dodavame vo cel html glavnite raboti
+                listItem.innerHTML = "<p>" + iminja.value + "</p>" +
+                                    + "<p>" + oznaka.value + "</p>" +
+                                    + "<p>" + koordinati.value + "</p>" +
+                                    + "<p>" + radius.value + "</p>" +
+                                    + "<p>" + visina.value + "</p>" +
+                                    + "<p>" + tipovi.value + "</p>" +
+                                    + "<button onclick = 'potvrda(this)'>Потврди</button>
+           
+           
+           
+             }
+            
+        }
+
+        function proveriTagOznaka(oznaka){
+
+            var razdeli = letalo.split("-") //ja delime oznakata na letaloto  "Z3-UNR-1234"
+            var brojka = parseInt(o[2])  //vtoriot del od zborot ako e brojka
+            
+            //ako ne e broj da vrati true
+            if(isNan(brojka)){
+                return true
+            }
+            //ako ne e isto da vrati true (obratna proverka)
+            if(oznaka.length != 11 || o[0] != "Z3" || o[1] != "UNR" || !(brojka >=1000 || brojka <=9999)){            
+                return true
+            }
+            else{
+
+                return false
+            }
+
+        }
+
+        function istiBrojki(oznaka){
+
+            var razdeli = oznaka.split("-")
+            var brojki = razdeli[2]
+
+            if(brojki[0]===brojki[1] && brojki[0]===brojki[2] && brojki[0]===brojki[3]){
+                return true
+            }
+            else{
+                return false
+            }
+
+        }
+
+    </script>
+
+
+    <style>
+
+        label{
+            display: inline-block;
+            width: 150px;
+        }
+
+        div{
+             margin-bottom: 5px;
+        }
+
+    </style>
+
+
+</head>
+
+<body>
+
+    <div><h1>Регистрирај лет</h1></div>
+
+    <div><label>Име и презиме</label> <input id="podatoci" type="text"></div>
+    <div><label>Ознака на летало</label> <input id="oznaka" type="text"></div>
+    <div><label>Координати на лет</label> <input id="koordinati" type="text"></div>
+    <div><label>Радиус на лет</label> <input id="radius" type="text"></div>
+    <div><label>Висина на лет</label> <input id="visina" type="text"></div>
+    <div> <label>Тип на летало</label> 
+        <select id="tipovi">
+           
+            <option value="Едрилица">Едрилица</option>
+            <option value="Дрон">Дрон</option>
+
+        </select>
+    
+    </div>
+
+    <div> <input type="button" onclick="pritisni()" id="kopce" value="Најави"></div>
+
+    <h2>Регистрирани летови</h2>
+    <h3>Број на пријавени летови:<span id="prijaveni">0</span></h3>
+    <ul id="dodavaj">
+
+
+    </ul>
+
+</body>
+</html>

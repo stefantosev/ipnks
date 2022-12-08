@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+
+        function dodajRed(){
+            
+            var tabela = document.getElementById("proekti").getElementsByTagName("tbody")[0]
+
+            var proekt = document.getElementById("project")
+            var avtor = document.getElementById("author")
+            var cost = document.getElementById("cost")
+
+            if(proekt.value == "" || avtor.value == "" || cost.value == ""){
+                alert("Ne se popolneti site: polinja")
+                return
+            }
+
+            
+            
+            //dodavanje na nova redica
+            var novaRedica = tabela.insertRow(tabela.rows.length)
+            //dodavanje na cells vo taa redica
+            var newCell0 = novaRedica.insertCell(0)
+            var newCell1 = novaRedica.insertCell(1)
+            var newCell2 = novaRedica.insertCell(2)
+
+            newCell0.innerHTML = avtor.value
+            newCell1.innerHTML = proekt.value
+            newCell2.innerHTML = cost.value
+
+            //resetirame za naredno
+            avtor.value = ""
+            proekt.value = ""
+            cost.value = ""
+        }
+
+    </script>
+
+    <style>
+        label {
+            width: 100px;
+            display: inline-block;
+        }
+        input[type=button]{
+            width: 265px;
+        }
+        div {
+            margin-bottom: 10px;
+        }
+        table, td, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <h1>Project details</h1>
+
+    <div> <label>Author</label> <input id="author" type="text"> </div>
+    <div> <label>Project</label> <input id="project" type="text"> </div>
+    <div> <label>cost</label> <input id="cost" type="text"> </div>
+    <div> <input type="button" name="add" value="Add" onclick="dodajRed();"></div>
+
+    <h2>Projcet list</h2>
+
+    <table id="proekti">
+        <thead> <th>Author</th> <th>Project</th>  <th>Cost</th> </thead>
+        <tbody></tbody>
+    </table>
+
+    
+</body>
+</html>

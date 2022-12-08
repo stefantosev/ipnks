@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    
+
+
+</head>
+<body>
+    <h1>About Me</h1>
+    <ul>
+     <li id="prv">Name: <span id="name"></span>
+     <li id="vtor">Index: <span id="index"></span>
+     <li id="tret">Hometown: <span id="hometown"></span>
+    </ul> 
+
+    
+    <script>
+        //da bide vo body script za da raboti
+
+        //da se potpolni soddrzinata na tagovite
+        var ime = document.getElementById("name").innerHTML = "Stefan"
+        var indeks = document.getElementById("index").innerHTML = "213091"
+        var rodenGrad = document.getElementById("hometown").innerHTML = "Veles"
+
+        //da se obojat site li elementi
+        var lista = document.getElementById("prv").style.background = "red"
+        var lista = document.getElementById("vtor").style.background = "red"
+        var lista = document.getElementById("tret").style.background = "red"
+
+        //da se smeni fontot
+        document.body.style.fontFamily = "Arial"
+
+    </script>
+</body>
+</html>

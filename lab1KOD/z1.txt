@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrom</title>
+
+
+    <script>
+        var broj = prompt("Vnesi tricifren broj: ")
+    
+        if(broj.length !=3){
+            alert("Ne ste vnele tricifren broj!")
+        }
+        else{
+            if(broj[0] === broj[2]){ 
+                document.write("Brojot "  + broj + " e palindrom")
+            }
+            else{
+                document.write("Brojot ne e palindrom")
+            }
+        }
+
+       
+
+
+    </script>
+</head>
+
+
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+    <style>
+          label{
+            display: inline-block;
+            height: 50px;
+            margin: auto;
+            font: italic
+        }
+        input{
+            width: 50px;
+            margin-top: 10px;
+          
+        }
+
+    </style>
+
+    <script>
+        function dodadi(){
+            var real1 = document.getElementById("real1")
+            var imag1 = document.getElementById("imag1")
+
+            var real2 = document.getElementById("real2")
+            var imag2 = document.getElementById("imag2")
+
+            var rezReal = document.getElementById("rezReal")
+            var rezImag = document.getElementById("rezImag")
+
+            
+            var rez1 = parseInt(real1.value)  + parseInt(real2.value)
+            var rez2 = parseInt(imag1.value) + parseInt(imag2.value)
+
+            rezReal.value = rez1
+            rezImag.value = rez2
+
+
+        }
+
+    </script>
+
+
+<body>
+
+    <div><input type="text" id="real1"> <input type="text" id="imag1"> <label>i</label></div>
+    <div><input type="text"id="real2"> <input type="text" id="imag2"> <label>i</label></div>
+    <div><input type="button" onclick="dodadi()" value="Add"></div>
+    <div><input type="text" id="rezReal"> <input type="text" id="rezImag"> <label>i</label></div>
+    
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+    <script>
+        function validiraj(){
+            var vrednost = document.getElementById("vrednost").value
+            var paragraf = document.createElement("p")
+            
+            if(regeks(vrednost)){
+                alert("Ne e pravilna kartickata")
+                return
+            }
+
+
+        }
+
+        function levo(){
+           
+           var niza = document.getElementById("vrednost")
+
+        
+           var prva = niza.value.charAt(0)
+           niza.value = niza.value.slice(1,10)
+           niza.value = niza.value + prva
+
+       }
+
+        //proverka dali e pravilen vnesot
+        function regeks(vrednost){
+            var vrednost = document.getElementById("vrednost")
+            
+            var regex = /^[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]$/
+            if(regex.test(vrednost)){
+                false
+            }
+            else{
+                true
+            }
+        }
+
+    </script>
+
+<body>
+    <div><input type="text" id="vrednost">
+        <input type="button" onclick="levo()" value="<">
+        <input type="button" onclick="denso()" value=">">
+        <input type="button" onclick="validiraj()" value="Validate">
+    </div>
+    <div><h2>Valid:</h2> <h2 id="teskt">  </h2></div>
+    
+</body>
+</html>
