@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>  
+
+        //se cuvaat podatoci vo nizata (poleto)
+        nizaStudent = []
+
+        //se pravi klasa za student za da gi koristime posle koga ke vnesuvame vo niza
+        class Student{
+            constructor(ime, prezime, indeks, predmet, ocena){
+                this.ime = ime
+                this.predmet = predmet
+                this.prezime = prezime
+                this.indeks = indeks
+                this.ocena = ocena
+            }
+        }
+
+        function staviRedica(){
+            var ime = document.getElementById("ime")
+            var prezime = document.getElementById("prezime")
+            var indeks = document.getElementById("indeks")
+            var predmet = document.getElementById("predmet")
+            var ocena = document.getElementById("ocena")
+
+            //pravime primenlivi za tabelata i redicata
+            var table = document.getElementById("tabela").getElementsByTagName("tbody")[0]
+            var redica = table.insertRow(table.rows)
+
+            if(isNaN(indeks.value)){
+                alert("Vnesete validen indeks :)")
+                return
+            }
+
+            var kelija0 = redica.insertCell(0)
+            var kelija1 = redica.insertCell(1)
+            var kelija2 = redica.insertCell(2)
+            var kelija3 = redica.insertCell(3)
+            var kelija4 = redica.insertCell(4)   
+            
+            //pisuvame vnatre vo keliite (vrednosta nasa vnesena)
+            kelija0.innerHTML = ime.value
+            kelija1.innerHTML = prezime.value
+            kelija2.innerHTML = indeks.value
+            kelija3.innerHTML = predmet.value
+            kelija4.innerHTML = ocena.value
+
+            
+            //pravime objekt od klasa student (ne go pisueme oti e js)
+            objektStudent = new Student(ime.value, prezime.value, indeks.value, predmet.value, ocena.value)
+            
+            //so push vnesuvame  vo poleto(nizata)
+            nizaStudent.push(objektStudent)
+
+            //resetirame za slednite redovi
+            document.getElementById("ime").value = ""
+            document.getElementById("prezime").value = ""
+            document.getElementById("indeks").value = ""
+            document.getElementById("predmet").value = ""
+            //ocena.selectedIndex = 0
+
+        }
+
+
+    </script>
+
+    <style>
+        label{
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+        }
+
+        div{
+            margin-bottom: 5px;
+        }
+
+        select{
+            display: inline-block;
+            width: 175px;
+        }
+        #vnes{
+            
+            margin-left: 195px;
+        }
+
+        h1{
+            text-align: center;
+        }
+        table, th , td{
+           
+            border: 1px solid;
+            font-weight: bold;
+            padding-left: 3px;
+            padding-right: 3px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div><h1>Форма за венсување оцени</h1></div>
+    <div><label>Име:</label> <input type="text" id="ime"></div>
+    <div><label>Презиме:</label> <input type="text"  id="prezime"></div>
+    <div><label>Индекс:</label> <input type="text"  id="indeks"></div>
+    <div><label>Предмет:</label> <input type="text"  id="predmet"></div>
+    <div><label>Оцена:</label>
+        <select name=ocenka" id="ocena">
+        <option>5 (пет)</option>
+        <option>6 (шест)</option>
+        <option>7 (седум)</option>
+        <option>8 (осум)</option>
+        <option>9 (девет)</option>
+        <option>10 (десет)</option>
+        </select></div>
+    <div> <input type="button" value="Внеси" id="vnes" onclick="staviRedica()"></div>
+    <div>
+        <table id="tabela">
+            <thead>
+             <th>Име</th>
+             <th>Презиме</th>
+             <th>Индекс</th>
+             <th>Предмет</th>
+             <th>Оцена</th>
+            </thead>
+
+            <tbody>
+
+            </tbody>
+
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+
+        function Prikaz(){
+            items = document.getElementById("items").value
+            niza = items.split(",")
+            opcija = document.getElementById("opcija")
+
+            //go koristime za da vnesuvame vo divot
+            vnesuvaj = document.getElementById("vnesuvaj")
+
+            //console.log(niza) //raboti nizata
+            //console.log(opcija)
+
+            for(var i=0; i<niza.length; i++){
+                if(opcija.value == "Radio Button"){
+                    var novElement = document.createElement("input")
+                    //type stavame da e radio
+                    novElement.setAttribute("type", "radio")
+                    novElement.setAttribute("name", "item")  //samo edno da se selektira
+                    Tekst = document.createTextNode(niza[i])
+                }
+
+                else if(opcija.value == "Check Box"){
+                    var novElement = document.createElement("input")
+                    //type stavame da e checkbox
+                    novElement.setAttribute("type", "checkbox")
+                    Tekst = document.createTextNode(niza[i]) //da se vnesuva imeto do opcijata
+                    
+                }
+
+                vnesuvaj.appendChild(novElement)
+                vnesuvaj.appendChild(Tekst) //posleden se stava tekstot
+
+            }
+        }
+    </script>
+
+
+    <style>
+
+        h1{
+            text-align: center;
+        }
+
+        label{
+            display: inline-block;
+            width: 100px;
+            height: 25px;
+            
+        }
+
+        /* div{
+            margin-bottom: 5px;
+        } */
+
+        #opcija{
+            display: inline-block;
+            width: 175px;
+        }
+
+        #kopce{
+            margin-left: 195px;
+        }
+    </style>
+
+</head>
+
+
+<body>
+    <div><label>Items:</label> <input type="text" id="items"></div>
+    <div><label>Type:</label> 
+        <select id="opcija">
+            <option>Radio Button</option>
+            <option>Check Box</option>
+        </select>
+    </div>
+    <div><input type="button" onclick="Prikaz()" value="Прикажи" id="kopce"></div>
+    <div id="vnesuvaj"></div>
+</body>
+</html>

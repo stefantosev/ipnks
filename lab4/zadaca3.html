@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        function Promena(){
+
+            value = document.getElementById("value")
+            radio1 = document.getElementById("boja")
+            radio2 = document.getElementById("slika")
+
+            if(radio1.checked){
+                document.body.style.background = value.value
+            }else if(radio2.checked){
+                document.body.style.backgroundImage = `url(${value.value})`
+            }
+
+        }
+
+    </script>
+
+    <style>
+
+        label{
+            display: inline-block;
+            width: 100px;
+            height: 25px;
+        }
+
+        div{
+            margin-bottom: 5px;
+        }
+
+        #radija{
+            display: inline-block;
+            width: 175px;
+        }
+
+        #kopce{
+            margin-left: 195px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div><h1>Промена на позадина</h1></div>
+    <div id="radija"> <input type="radio" name="radija" id="boja">Color <input type="radio" name="radija" id="slika">Image</div>
+    <div> <label>Value:</label> <input type="text" id="value"></div>
+    <div> <input type="button" value="Промени" id="kopce" onclick="Promena()"></div>
+</html>
