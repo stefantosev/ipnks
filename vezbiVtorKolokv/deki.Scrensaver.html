@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- TROLL ZADACA (NE RABOTI) -->
+
+    <script>
+        function move(){
+            slika = document.getElementsByTagName("img")
+            console.log(slika[0])
+            slika[0].style.width = 100 + "px"
+            slika[0].style.heigth = 100 + "px"
+            setInterval(dejan, 1000, slika[0])
+        }
+
+
+        pozicija=0
+        function dejan(slika){
+            
+            if(pozicija<800){
+                pozicija++
+                pozicija.style.left = pozicija + "px"
+            }
+        }
+
+    </script>
+
+    <style>
+        body{
+            border: 2px solid green;
+            width: 1200px;
+            height: 900px;
+        }
+    </style>
+
+</head>
+
+<body onload="move()">
+    <div> <img src="dejan.png"></div>
+</body>
+</html>

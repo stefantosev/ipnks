@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- RABOTI -->
+
+</head>
+
+<body>
+    <div><input type="button" id="levo" value="<" onclick="move('<')">  <input type="button" id="desno" value=">" onclick="move('>')"></div>
+    <!-- <div><input type="button" id="levo" value="<" onclick="dviziLevo()">  <input type="button" id="desno" value=">" onclick="Desno()"></div> -->
+    <script>
+        //da se parsira json string vo obicen string
+        data = '[{"background-color":"red", "width":"100px", "height":"100px"}, {"background-color":"green", "width":"50px", "height":"100px"}, {"background-color":"blue", "width":"100px", "height":"50px"}]';
+        data = JSON.parse(data)
+
+        index = 0
+        dvizi = false
+
+        console.log(data)
+
+        var novDiv = document.createElement("div")
+
+        novDiv['left'] = 0
+        promenaDiv(data[index])
+        document.body.appendChild(novDiv)
+
+        //da se smenue elementot
+        function promenaDiv(first){
+            novDiv.style.backgroundColor = first['background-color']
+            novDiv.style.position = 'absolute'
+            novDiv.style.width = first['width']
+            novDiv.style.height = first['height']
+
+        }
+
+
+        function move(direction){ //za kopcinjata
+
+            if(!dvizi){  //ako e true
+                if(direction == '<'){
+                    interval = setInterval(dviziLevo, 10)
+                }
+                if(direction == '>'){
+                    interval = setInterval(dviziDesno, 10)
+                }
+            }
+        }
+
+        function dviziLevo(){
+            dvizi = true
+            novDiv['left']-=5
+            novDiv.style.left = novDiv['left'] + "px"
+
+            if(novDiv['left'] < -150){
+                index++
+
+                if(index >= data.length){
+                    index = 0 
+                }
+
+                promenaDiv(data[index])
+
+                novDiv['left'] = 1500
+                novDiv.style.left = novDiv['left'] + "px"
+            }
+
+            if(novDiv['left']==0){
+                clearInterval(interval)
+                dvizi = false
+            }
+
+        }
+
+
+        //dvizime desno
+        function dviziDesno(){
+            dvizi = true
+            novDiv['left']+=5
+            novDiv.style.left = novDiv['left'] + "px"
+
+            if(novDiv['left'] > 1500){
+                index--
+
+                if(index < 0){
+                    index = data.length - 1
+                }
+
+                promenaDiv(data[index])
+
+                novDiv['left'] = -150
+                novDiv.style.left = novDiv['left'] + "px"
+            }
+
+            if(novDiv['left'] == 0){
+                clearInterval(interval)
+                dvizi = false
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- RABOTI -->
+
+    <script>  
+        function snowFall(){
+            var sliki = document.getElementsByTagName("img")
+
+            for(var i=0; i<sliki.length; i++){
+                sliki[i].style.top = -200 + "px" //da gi skrieme slikite
+                sliki[i].style.position = "absolute"
+                sliki[i].style.left = Math.floor(Math.random() * 1600) + "px"
+                sliki[i].style.width =  200 + "px"
+                sliki[i].style.height =  200 + "px"
+                interval = setInterval(fail, (Math.random() + 0.5) * 20, sliki[i]) //animacija da pagjaat so funkcija
+            }
+
+        }
+
+        pos = 0
+        function fail(slika){
+            
+            pos = Number(slika.style.top.split("px")[0])
+            slika.style.top = pos + 5 + "px"
+            if(pos>1000){
+                pos++
+                slika.style.top = -200 + "px"
+            }
+        }
+
+    </script>
+</head>
+<body onload="snowFall()">
+    <img src="s1.png"/>
+    <img src="s2.png"/>
+    <img src="s3.png"/>
+    <img src="s4.png"/>
+    <img src="s5.png"/>
+    <img src="s6.png"/>
+</body>
+</html>

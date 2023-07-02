@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        label{
+            display: inline-block;
+            width: 120px;
+            height: 25px;
+        }
+
+        table, thead, tbody, td, tr, th{
+            border: 3px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+
+    <script>
+        var data = '[{"ime":"Nikola","prezime":"Nikolovski","id":"123","pol":"1","godini":"25","email":"vedan@yahoo.com","lokacija":"Skopje"},{"ime":"Angela","prezime":"Nikolovski","id":"123","pol":"2","godini":"15","email":"vedan@yahoo.com","lokacija":"Skopje"}]'
+        let newData=JSON.parse(data)
+
+        function ekran(){
+            for(var i=0; i<newData.length; i++){
+                var ime = newData[i].ime;
+                var prezime = newData[i].prezime;
+                var id = newData[i].id;
+                var pol = newData[i].pol;
+                var godini = newData[i].godini;
+                var email =newData[i].email;
+                var lokacija = newData[i].lokacija;
+                
+                var polnoletni = document.getElementById("polnoletni")
+                var head = document.createElement("tr")
+                
+                var vrednostPoln = document.getElementById("vrednostPoln");
+                var vrednostMal = document.getElementById("vrednostMal");
+                var red = document.createElement("tr");
+
+                red.innerHTML = "<td>" + ime + "</td>" +
+                                "<td>" + prezime + "</td>" +
+                                "<td>" + email + "</td>" +
+                                "<td>" + lokacija + "</td>" +
+                                "<td><input type='button' onclick='daliVakciniran(this)' value='Vakciniran'></td>"
+                
+                if(pol==1){
+                    red.style.backgroundColor = 'lightblue';
+                }
+                if(pol==2){
+                    red.style.backgroundColor = 'lightpink'
+                }                
+
+                if(godini>=18){
+                    vrednostPoln.append(red);
+                }else{
+                    vrednostMal.append(red);
+                }   
+               
+            }
+        }
+
+        function daliVakciniran(kopce){
+                    var red = kopce.parentNode.parentNode
+                    red.style.opacity = 1
+            
+                    var interval = setInterval(()=>{
+                    if(red.style.opacity>=0){
+                        red.style.opacity -=0.3;
+                    }else{
+                        clearInterval(interval);
+                        //kopce.disabled = true;
+                        red.remove()
+                        var primeni = document.getElementById("primeni")
+                        var lista = document.createElement("li")
+                        lista.innerHTML = red.children[0].innerHTML
+                        primeni.append(lista);
+                       
+                    }            
+                    },200)
+        }
+
+        function Dodaj(){
+                var ime = document.getElementById("ime").value 
+                var prezime = document.getElementById("prezime").value 
+                var maticen = document.getElementById("maticen").value
+                var email = document.getElementById("adresa").value 
+                var godini = document.getElementById("godini").value
+                var maski = document.getElementById("maski")
+                var zenski = document.getElementById("zenski")
+                var lokacija = document.getElementById("lokacija")
+
+
+                if(ime=="" || prezime=="" || maticen=="" || email=="" || godini=="" || lokacija=="" || (maski.checked==false && zenski.checked==false)){
+                    alert("Popolnete gi site polinja")
+                    return;
+                }
+
+                var vrednostPoln = document.getElementById("vrednostPoln");
+                var vrednostMal = document.getElementById("vrednostMal");
+                var red = document.createElement("tr");
+
+                red.innerHTML = "<td>" + ime + "</td>" +
+                                "<td>" + prezime + "</td>" +
+                                "<td>" + email + "</td>" +
+                                "<td>" + lokacija + "</td>" +
+                                "<td><input type='button' onclick='daliVakciniran(kopce)' value='Vakciniran'></td>"
+                
+                if(maticen.length !=13 || isNaN(maticen)){
+                    alert("Vnesete validen maticen")
+                    return;
+                }
+
+                if(proveriEmail(email) == false){
+                    alert("Vnesete validen email")
+                    return;
+                }
+                if(isNaN(godini)){
+                    alert("Vnesete validdni godini")
+                    return;
+                }
+
+                if(maski.checked==true){
+                    red.style.backgroundColor = 'lightblue';
+                }
+                if(zenski.checked==true){
+                    red.style.backgroundColor = 'lightpink'
+                }                
+
+                if(godini>=18){
+                    vrednostPoln.append(red);
+                }else{
+                    vrednostMal.append(red);
+                }   
+       
+        }
+
+        function proveriEmail(email){
+            if(email.includes("@yahoo.com") || email.includes("@gmail.com")){
+                return true
+            }else{
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body onload="ekran()">
+    <div><h1>Vakcina.mk</h1></div>
+    <div><h2>Sajt za iskazuvanje interes za vakcina</h2></div>
+    <div><label>Ime:</label> <input type="text" id="ime"> <label>Prezime:</label> <input type="text" id="prezime"></div>
+    <div><label>Maticen:</label>  <input type="text" id="maticen"> <label>Pol:</label> <input type="radio" name="radi" id="maski">Maski <input type="radio" name="radi" id="zenski">Zenski</div>
+    <div><label>Godini:</label> <input type="text" id="godini">  <label>Adresa:</label> <input type="text" id="adresa"></div>
+    <div><labe>Lokacija:</label> 
+        <select>
+            <option value=""></option>
+            <option value="">Skopje</option>
+            <option value="">Bitola</option>
+            <option value="">Kumanovo</option>
+            <option value="">Tetovo</option>
+        </select>
+        <input type="button" value="Dodaj" onclick="Dodaj()" id="kopce">
+    </div>
+
+    <div><h2>Maloletni</h2></div>
+    <div>
+        <table>
+            <thead>
+                <tr><th>Ime</th> <th>Prezime</th> <th>Adresa</th> <th>Lokacija</th> <th>Status</th></tr>
+            </thead>
+            <tbody id="vrednostMal">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div><h2>Polnoletni</h2></div>
+    <div>
+        <table>
+            <thead>
+                <tr><th>Ime</th> <th>Prezime</th> <th>Adresa</th> <th>Lokacija</th> <th>Status</th></tr>
+            </thead>
+            <tbody id="vrednostPoln">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div><h2>Vakcinirani</h2></div>
+    <div>
+        <ul id="primeni">
+
+        </ul>
+    </div>
+</body>
+</html>

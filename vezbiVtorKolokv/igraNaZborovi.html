@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- RABOTI (do pola) -->
+    
+    <script>
+        function start(){
+            dict = '["јас", "ти", "тој", "таа", "тоа", "ние", "вие", "тие"]'
+            jsonDict = JSON.parse(dict)
+            interval = setInterval(vreme, 1000)  //NE STAVAJ VAR PRED INTERVAL 
+
+            vremeDiv = document.getElementById("vreme")
+
+            tekst = document.getElementById("tekst")
+            kopce = document.getElementById("kopce")
+
+            random = Math.floor(Math.random() * 31)
+            divBukvi = document.getElementById("bukvi")
+
+            dodadeni = ""
+            for(var i=0; i<10; i++){
+                random = Math.floor(Math.random() * 31)
+                dodadeni += bukvi[random].toUpperCase() + " "
+            }
+
+            divBukvi.innerHTML = dodadeni
+
+        }
+        
+        
+        bukvi = ["а","б","в","г","д","ѓ","е","ж","з","ѕ","и","ј","к","л","љ","м","н","њ","о","п","р","с","т","ќ","у","ф","х","ц","ч","џ","ш"]
+        var sekundi = 60
+        
+
+        function vreme(){
+            sekundi--
+            vremeDiv.innerHTML = `Преостанато време ${sekundi} секунди`
+            
+            if(sekundi==0){
+                clearInterval(interval)
+                tekst.disabled = true
+                kopce.disabled = true
+
+            }
+        }
+        
+        
+        var pogodoci = 0 //globalno za site da broime
+
+        function proveri(){
+            dodadeni = dodadeni.split(" ") //gi razdelueme dodadenite
+
+            tekst = document.getElementById("tekst").value 
+            divPogodoci = document.getElementById("pogodoci")
+
+            //vrtime niz parsiraniot json stringot 
+            for(var i=0; I<jsonDict.length; i++){
+                
+                if(tekst.length==2 || tekst.length==3){
+
+                }
+                
+                if(tekst == jsonDict[i]){
+                    divPogodoci.innerHTML = `Погодоци ${pogodoci}`
+                }
+
+                //vrtime niz dadenite bukvi 
+                for(var j=0; j<10; j++){
+                    if(tekst.charAt(i) == dodadeni[j]){
+                        
+                    }
+                }
+            }
+
+        }
+
+    </script>
+
+</head>
+
+<body onload="start()">
+    <div id="bukvi"></div>
+    <div><input type="text" id="tekst"> <input type="button" value="Провери" onclick="proveri()" id="kopce"></div>
+    <div><label id="vreme">Преостанато време 60 секунди.</label> <label id="pogodoci">Погодоци</label></div>
+
+</body>
+</html>

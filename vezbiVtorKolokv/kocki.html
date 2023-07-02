@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- NE RABOTI -->
+
+    <script>
+        function VrtiKocka(){
+            var kocka1 = document.getElementById("kocka1").value
+            var kocka2 = document.getElementById("kocka2").value
+            var input = document.getElementById("number")
+
+            var parsirana1= parseInt(kocka1)
+            var parsirana2 = parseInt(kocka2)
+
+            var time = new Date().getTime();
+        
+            var brojac=0
+
+            var interval = setInterval(() =>{
+                brojac++
+                if(brojac===60){
+                    clearInterval(interval)
+
+                    if(parsirana1 + parsirana2 == input.value){
+                        input.style.background = "green"
+                    }else{
+                        input.style.background = "red"
+                    }
+
+                
+                }
+                //oti e paragraf mora text content
+                kocka1.textContent = Math.floor(Math.random()*(6-1+1) +1).toString();
+                kocka2.textContent = Math.floor(Math.random()*(6-1+1) +1).toString();
+                
+            }, 20)
+
+         
+        }
+
+
+        
+
+    </script>
+
+    <style>
+        #numbersMason{
+            display: inline-flex;
+            margin: 5px;
+            font-size: 100px;
+        }
+
+        p{
+            padding: 30px;
+            border: black 2px solid;
+            width: 90px;
+            margin: 30px;
+            border-radius: 25px;
+            text-align: center;
+        }
+
+        #kopce2{
+            display: inline-block;
+            margin: auto;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+    <div> <input type="number" id="brojki"> <input type="button"  value="Roll"id="kopce1" onclick="VrtiKocka()"></div>
+    <div id="numbersMason">
+        <p id="kocka1">0</p>
+        <p id="kocka2">0</p>
+    </div>
+
+    <div><input type="button" value="History to json" id="kopce2"></div>
+
+</body>
+</html>

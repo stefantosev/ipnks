@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style> 
+        label{
+            display: inline-block;
+            width: 200px;
+            height: 25px;
+        }
+        table, thead, tbody, td, tr, th{
+            border: 3px solid black;
+            border-collapse: collapse;
+        }
+
+        #fleksot{
+            display: flex;
+        }
+
+        #naracki{
+            float: right;
+            width: 300px; 
+            display:flexbox
+            
+        }
+        
+    </style>
+
+    <script>
+        var data = '[{"address_from":"Partizanska 1", "address_to":"Kliment Ohridski 15", "weight":"3.5", "paid_type":"on_send", "ID":"Id902 90sUsdql3", "delivery": "on_hold"},{"address_from":"Ruzveltova 3", "address_to":"3MUB 43", "weight":"15", "paid_type":"on_receive", "ID":"W8902 90sWmPqLzl3", "delivery": "false"}]'
+        var parsed = JSON.parse(data)
+        var suma = 0
+        console.log(parsed)
+
+        function ekran(){
+            //gi zimame vrednosti 
+            console.log(parsed.length);
+            for(var i=0; i<parsed.length; i++){
+                var address_from = parsed[i].address_from
+                var address_to = parsed[i].address_to
+                var weight = parsed[i].weight
+                var paid_type = parsed[i].paid_type
+                var id = parsed[i].ID
+                var delivery = parsed[i].delivery
+
+                //id-to se stava so mali bukvi i praznite mesta se razdeluat so '-'
+                var lowerID = id.toLowerCase().split(" ").join("-")
+                
+                var cena
+                var realWeight = parseInt(weight)
+
+                //ako tezinata e pomala od 5, cenata e 500, vo obraten slucaj cenata e 1200
+                if(realWeight<5){
+                    cena = 500
+                }
+                else if(realWeight>5){
+                    cena = 1200
+                }
+
+                var red = document.createElement("tr")
+                var tabela = document.getElementById("tabela")
+
+
+                red.innerHTML= "<td>" + lowerID + "</td>" +
+                            "<td>" + address_from + "</td>" + 
+                            "<td>" + address_to + "</td>" + 
+                            "<td>" + cena + "</td>" +
+                            "<td> <button id='dostavi' onclick='dostavi(this)'> Доставено </button><br> <button id='remove' onclick='remove(this)'>Откажано</button> </td>" 
+
+                tabela.append(red)
+            }
+        }
+
+
+        function vnesi(){
+            var isprakac = document.getElementById("isprakac").value
+            var primac = document.getElementById("primac").value
+            var tezina = document.getElementById("tezina").value
+            var prakjanje = document.getElementById("prakjanje")
+            var primanje = document.getElementById("primanje")
+            var profilID = document.getElementById("profil").value
+
+
+            if(isprakac=="" || primac=="" || tezina=="" || (prakjanje.checked == false && primanje.checked==false) || profilID==""){
+                alert("Vnesete gi site polinja")
+                return
+            }
+
+            var novRed = document.createElement("tr")
+            var novaTabela = document.getElementById("tabela")
+
+            var cena
+            var realTezina = parseInt(tezina)
+
+            if(realTezina<=5){
+                cena = 500
+            }
+            else if(realTezina>5){
+                cena = 1200
+            }
+
+            novRed.innerHTML= "<td>" + profilID + "</td>" +
+                            "<td>" + isprakac + "</td>" + 
+                            "<td>" + primac + "</td>" + 
+                            "<td>" + cena + "</td>" +
+                            "<td> <button id='dostavi' onclick='dostavi(this)'> Доставено </button><br> <button id='remove' onclick='remove(this)'>Откажано</button> </td>" 
+
+            novaTabela.append(novRed)
+        }
+
+        function dostavi(btn){
+            var red = btn.parentNode.parentNode
+            red.style.backgroundColor = "lightgreen"
+        
+            btn.disabled = true
+            btn.nextElementSibling.nextElementSibling.disabled = true
+
+            var sum = document.getElementById("suma")
+
+            //napraveno: dodavaj sumite da se presmetuat
+            var zbir = red.children[3].innerHTML //ja zima brojkata od kelijata
+            suma+=parseInt(zbir)
+
+            sum.innerHTML = suma
+
+
+        }
+
+        function remove(btn){
+            //to do: so animacii da izbrise i da vnese kako lista
+            var red = btn.parentNode.parentNode
+
+            red.style.opacity = 1
+
+            var interval = setInterval(() => {
+                if(red.style.opacity>=0){
+                    red.style.opacity -= 0.3
+                    
+                }else{
+                    clearInterval(interval)
+                    red.remove()
+
+                    var list = document.getElementById("list")
+                    var ul = document.createElement("li")
+                    ul.innerHTML = red.children[0].innerHTML
+
+                    list.append(ul)
+                }
+
+            }, 200);
+        }
+
+    </script>
+</head>
+<body onload="ekran()">
+    <div><h1>Карго достава на пратки</h1></div>
+    <div> <label>Адреса на испраќач:</label> <input type="text" id="isprakac"></div>
+    <div> <label>Адреса на примач:</label> <input type="text" id="primac"></div>
+    <div> <label>Тежина на пратка:</label> <input type="text" id="tezina"></div>
+    <div> <label>Начин на плаќање:</label> Плаќање<input type="radio" name="nc" id="plakjanje"> Примање<input type="radio" name="nc" id="primanje"></div>
+    <div> <label>ID на профил:</label> <input type="text" id="profil"></div>
+    <div><input type="button" id="kopce" value="Внеси" onclick="vnesi()"></div>
+    
+    <div id="fleksot">
+        <div id="naracki"><h2>Откажани нарачки</h2>
+             <ul id="list">
+            <!-- za nas -->
+            </ul>
+        </div>
+    
+        <div id="pratki"><h2>Внесени пратки</h2>
+            <h3>Вкупна сума: <span id="suma">0</span></h3>
+            <table id="tabela">
+                <thead>
+                <tr> <td>ID</td> <td>Адреса на испраќач</td> <td>Адреса на примач</td> <td>Цена</td><td>Акции</td></tr>
+                </thead>
+                <tbody>
+                <!-- nie da popolnime -->
+                </tbody>
+             </table>
+        </div>
+    </div>
+</body>
+</html>

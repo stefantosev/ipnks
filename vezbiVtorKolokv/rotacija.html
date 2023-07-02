@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- RABOTI (BITNA ZA JSON) -->
+
+</head>
+<body>
+    <div><label>X:</label> <input type="text" id="x"></div>
+    <div><label>Y:</label> <input type="text" id="y"></div>
+    <div><label>Rotacija</label> <input type="text" id="rotacija"></div>
+    <div><input type="button" value="To Json" onclick="jason()"></div>
+    <div><input type="button" value="Animate" onclick="animiraj()"></div>
+    
+    <div id="kocka">
+
+    </div>
+
+    <script>
+        //pravime klasa za ako treba toj podatok od niza vo json
+        class Pozicii{
+            constructor(x, y, rotacija){
+                this.x = x
+                this.y = y
+                this.rotacija = rotacija
+            }
+        }
+
+        jsonNiza = [] 
+
+        kocka = document.getElementById("kocka")
+        kocka.style.width = 50 +"px"
+        kocka.style.height = 50 +"px"
+        kocka.style.position = "absolute"
+        kocka.style.backgroundColor = "yellow"
+        kocka.style.top = 130 + "px"
+        kocka.style.left = 0 + "px"
+
+        
+        function animiraj(){
+            x = document.getElementById("x").value
+            y = document.getElementById("y").value
+            rotacija = document.getElementById("rotacija").value
+
+            intervalX = setInterval(move_X, 1)
+            intervalY = setInterval(move_Y, 10)
+
+        }
+        
+        data = [] 
+        data['left'] = Number(kocka.style.left.split("px")[0]) //x
+        data['top'] =  Number(kocka.style.top.split("px")[0])  //y
+
+        function move_X(){
+            if(data['left'] >= x){
+                clearInterval(intervalX)
+            }
+            if(x>0){
+                data['left'] += 5
+                kocka.style.left = data['left'] + 1 + "px"
+            }
+            if(x<0){ //za da se vrakja nagore
+                data['left'] -= 5
+                kocka.style.left = data['left'] + 1 + "px"
+            }
+           
+            console.log(data['left'])
+        }
+
+        function move_Y(){
+            if(data['top'] >= y){
+                clearInterval(intervalY)
+            }
+            if(y>0){
+                data['top'] += 5
+                kocka.style.top = data['top'] + 1 + "px"
+            }
+            if(y<0){
+                data['top'] -= 5
+                kocka.style.top = data['top'] + 1 + "px"
+            }
+            
+        }
+
+        //da se napravi vo json
+        function jason(){
+            jsonNiza.push(new Pozicii(x,y,rotacija))
+            jsonString = JSON.stringify(jsonNiza)//od objekt vo json
+
+            console.log(jsonString)
+
+        }
+    </script>
+</body>
+</html>

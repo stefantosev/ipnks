@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- RABOTI -->
+
+    <style>
+        label{
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            margin-top: 5p;
+        }
+    </style>
+
+
+    <script>
+
+        function stavaj(){
+            var r = document.getElementById("r").value
+            var g = document.getElementById("g").value
+            var b = document.getElementById("b").value
+            var input = document.getElementById("input").value
+        
+            var rgb = 'rgb('+ r + ',' + g + ',' + b + ')'
+
+
+            pole = document.getElementById("pole")
+            novParagraf = document.createElement("p")
+         
+            //vo niza stavame paragrafite
+            var niza = []
+            niza.push(novParagraf)
+
+            //da go menue tekstot so rgb boi
+            novParagraf.style.color = rgb
+            novParagraf.innerHTML += input  
+            pole.append(novParagraf)
+
+        }
+
+
+        function vadi(){
+            var paragrafi = document.getElementsByTagName("p")
+
+            var start = document.getElementById("Start")
+            var end = document.getElementById("End")
+
+            //brise odozgora
+            if(start.checked){
+                paragrafi[0].remove()
+            }
+            //brise odozdole
+            else if(end.checked){
+                paragrafi[paragrafi.length-1].remove()
+            }
+            
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <div><label>Red:</label> <input type="text" id="r"> <Label>(0-255)</Label></div>
+    <div><label>Green:</label> <input type="text" id="g"> <Label>(0-255)</Label></div>
+    <div><label>Blue:</label> <input type="text" id="b"> <Label>(0-255)</Label></div>
+   
+    <div><input type="radio" name="radija" id="Start"> Start</div>
+    <div><input type="radio" name="radija" id="End"> End</div>
+
+    <div><label>Text:</label> <input type="text" id="input"></div>
+    <div><input type="button" value="Add" onclick="stavaj()"> <input type="button" value="Delete" onclick="vadi()"></div>
+    
+    <div id="pole"> </div>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DatibamZadacata2</title>
+
+    <style>
+        label{
+            display: inline-block;
+            width: 200px;
+            height: 25px;
+        }
+
+        table, thead, tbody, tr, td, th{
+            border: 3px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+
+    <script>
+        var data = '[{"address_from":"Partizanska 1", "address_to":"Kliment Ohridski 15", "weight":"3.5", "paid_type":"on_send", "ID":"Id902 90sUsdql3", "delivery": "on_hold"},{"address_from":"Ruzveltova 3", "address_to":"3MUB 43", "weight":"15", "paid_type":"on_receive", "ID":"W8902 90sWmPqLzl3", "delivery": "false"}]'
+        var parsed = JSON.parse(data)
+        var vk = 0 //sumata
+
+        console.log(parsed)
+
+        //onload funkicja da se prikazue so json, works
+        function ekran(){
+            for(var i=0; i<parsed.length; i++){
+                var address_from = parsed[i].address_from
+                var address_to = parsed[i].address_to
+                var weight = parsed[i].weight
+                var paid_type = parsed[i].paid_type
+                var id = parsed[i].ID
+                var delivery = parsed[i].delivery
+
+                //id da se se napravi so mali bukvi i spaces ako ima so crta
+                var lowerId = id.toLowerCase().split(" ").join("-")
+                var cena
+                var parsedWeitgh = parseInt(weight)
+
+                //ako tezinata e pomala od 5 kila cenata ke bide 500
+                if(parsedWeitgh <= 5){
+                    cena = 500
+                }
+                //ako e pogolema od 5 kila ceanta e 1200
+                else if(parsedWeitgh > 5){
+                    cena = 1200
+                }
+
+                var red = document.createElement("tr")
+                var tabela = document.getElementById("tabela")
+
+                red.innerHTML = "<td>" + lowerId + "</td>" +
+                                "<td>" + address_from + "</td>" +
+                                "<td>" + address_to + "</td>" +
+                                "<td>" + cena + "</td>" +
+                                "<td> <button id='dostavi' onclick='dostavi(this)'> Доставено </button> <br> <button id='otkazi' onclick='otkazi(this)'> Откажено </button></td>" 
+
+                tabela.append(red)
+            }
+        }
+
+        //works
+        function vnesi(){
+            var isprakjac = document.getElementById("isprakjac").value
+            var primac = document.getElementById("primac").value
+            var tezina = document.getElementById("tezina").value
+            var prakjanje = document.getElementById("prakjanje") //radio1
+            var primanje = document.getElementById("primanje") //radio2
+            var id = document.getElementById("id").value
+
+            if(isprakjac=="" || primac =="" || tezina=="" || id =="" || (prakjanje.checked == false && primanje.checked == false)){
+                alert("Внесете соодветни податоци")
+                return;
+            }
+
+        
+            var cena
+            var parsedTezina = parseInt(tezina)
+
+            //ako tezinata e pomala od 5 kila cenata ke bide 500
+            if(parsedTezina <= 5){
+                cena = 500
+            }
+            //ako e pogolema od 5 kila ceanta e 1200
+            else if(parsedTezina > 5){
+                cena = 1200
+            }
+
+            var dodadiRed = document.createElement("tr")
+            var tabela = document.getElementById("tabela")
+
+            dodadiRed.innerHTML = "<td>" + id + "</td>" +
+                            "<td>" + isprakjac + "</td>" +
+                            "<td>" + primac + "</td>" +
+                            "<td>" + cena + "</td>" +
+                            "<td> <button id='dostavi' onclick='dostavi(this)'> Доставено </button> <br> <button id='otkazi' onclick='otkazi(this)'> Откажено </button></td>" 
+
+            tabela.append(dodadiRed)
+        }
+
+        //works
+        function dostavi(kopce){
+            //da se presmeta sumata koga ke se klikne i da se smeni boja
+            var red = kopce.parentNode.parentNode
+            red.style.backgroundColor = "lightgreen"
+
+            //koga ke se klikne da se disablenat dvete kopcinja
+            kopce.disabled = true
+            kopce.nextElementSibling.nextElementSibling.disabled = true
+
+            var vkupno = document.getElementById("vkupno")
+
+            var suma = red.children[3].innerHTML
+            vk += parseInt(suma)
+
+            vkupno.innerHTML = vk
+        }
+
+        function otkazi(kopce){
+            //works
+            var red = kopce.parentNode.parentNode
+            red.style.opacity = 1
+
+            var interval = setInterval(() => {
+                if(red.style.opacity >= 0){
+                    red.style.opacity -= 0.3
+                }else{
+                    clearInterval(interval)
+                    var lista = document.getElementById("lista")
+                    var element = document.createElement("li")
+                    red.remove()
+
+                    element.innerHTML += red.children[0].innerHTML
+                    lista.append(element)
+                }
+            }, 90);
+
+        
+        }
+
+    </script>
+</head>
+<body onload="ekran()">
+    <div><h1>Карго достава на пратки</h1></div>
+    <div><label>Адреса на испраќач:</label> <input type="text" id="isprakjac"></div>
+    <div><label>Адреса на примач:</label> <input type="text" id="primac"></div>
+    <div><label>Тежина на пратка:</label> <input type="text" id="tezina"></div>
+    <div><label>Начин на плаќање:</label> Праќање<input type="radio" name="bt" id="prakjanje"> Примање<input type="radio" name="bt" id="primanje"></div>
+    <div><label>ID на профил:</label> <input type="text" id="id"></div>
+    <div><input type="button" value="Внеси" onclick="vnesi()"></div>
+
+    <div id="vneseni"><h2>Внесени пратки</h2>
+        <h3>Вкупна сума: <span id="vkupno">0</span></h3>
+        <table id="tabela">
+            <thead>
+                <tr> <td>ID</td> <td>Адреса испраќач</td> <td>Адреса примач</td> <td>Цена</td> <td>Акции</td></tr>
+            </thead>
+            <tbody>
+                <!-- da se popolni od nas -->
+            </tbody>
+        </table>
+    </div>
+
+
+    <div id="otkazani"><h2>Откажани пратки</h2>
+        <ul id="lista">
+            <!-- da se popolni od nas -->
+        </ul>
+    </div>
+
+</body>
+</html>

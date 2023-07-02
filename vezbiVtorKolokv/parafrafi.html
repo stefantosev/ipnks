@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+        <!-- RABOTI -->
+
+</head>
+<body>
+    <p id="p">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+    Nesciunt, minima quod explicabo expedita aut, perferendis id illo vitae enim tempora praesentium voluptate. 
+    Doloribus minus suscipit, pariatur dolore tempora consectetur atque.</p>
+    <div><label>color:</label> <select id="selektiraj0" onchange="dugme()"></select>
+    <label>width:</label> <select id="selektiraj1" onchange="shirina()"></select>
+    <label>background-color</label> <select id="selektiraj3" onchange="pozadina()"></select>
+    </div>
+
+    <script>
+        //kako matric
+        json = '[{"color":["red", "blue", "yellow"]}, {"width":["100px", "200px", "250px"]}, {"background-color":["red", "blue", "yellow"]}]'
+        json = JSON.parse(json)
+
+        select = document.getElementById("selektiraj0")
+        width = document.getElementById("selektiraj1")
+        pozadinA = document.getElementById("selektiraj3") //da ne se so isto ime so funkc
+        p = document.getElementById("p")
+        
+        for(i=0; i<json[0].color[0].length; i++){
+            select.innerHTML += "<option value=" + json[0].color[i] + ">" + json[0].color[i]  +"</option>"
+        }
+
+        for(i=0; i<json[1].width.length; i++){
+            width.innerHTML += "<option value=" + json[1].width[i] +">" + json[1].width[i] + "</option>"
+        }
+
+        for(i=0; i<json[2]['background-color'].length; i++){
+            pozadinA.innerHTML += "<option value=" +  json[2]['background-color'][i] +">"+ json[2]['background-color'][i] + "</option>"
+        }
+
+        function dugme(){
+            p.style.color = select.value
+        }
+
+        function shirina(){
+            p.style.width = width.value
+        }
+
+        function pozadina(){
+            p.style.backgroundColor = pozadinA.value
+            console.log(select)
+        }
+
+    </script>
+</body>
+</html>

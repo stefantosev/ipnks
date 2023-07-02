@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Wordle Finki</title>
+</head>
+
+<!-- TESKA -->
+
+<body>
+	<div id="inputs">
+		<div class="1">
+			<input type="text" class="box" maxlength="1">
+			<input type="text" class="box" maxlength="1">
+			<input type="text" class="box" maxlength="1">
+			<input type="text" class="box" maxlength="1">
+			<input type="text" class="box" maxlength="1">
+		</div>
+		
+	</div>
+	
+</body>
+    <script>
+
+
+let data = '["bukva", "jazik", "vokal", "misla", "tabla"]'
+let parsedData = JSON.parse(data)
+let wordCounter = 1
+
+function isLetter(letter) {
+	return isNaN(letter) && (letter.toUpperCase() !== letter.toLowerCase());
+}
+
+//Choose random word
+let word = parsedData[Math.floor(Math.random() * parsedData.length)]
+let wordLetters = word.split("")
+
+document.addEventListener("keypress", function (e) {
+	if (e.key === "Enter") {
+		//get letters from the newest input
+		let inputsDiv = document.getElementById("inputs").getElementsByClassName(wordCounter.toString())
+		let inputsChildren = inputsDiv[0].children
+		let inputs = Array.from(inputsChildren)
+		
+		//Check if empty space/number
+		inputs.forEach(i => {
+			if (!isLetter(i.value)) alert("Incorrect input")
+		})
+		
+		console.log(word)
+		//Check word
+		for (let i = 0; i < 5; i++) {
+			//Check for correct spaces
+			if (inputs[i].value === wordLetters[i]) {
+				inputs[i].style.background = "green"
+				continue
+			}
+			
+			//Check if letter in word
+			for (let j = 0; j < 5; j++) {
+				if (inputs[i].value === wordLetters[j]) {
+					inputs[i].style.background = "yellow"
+				}
+			}
+		}
+		
+		//Create new div after guess
+		++wordCounter
+		let mainDiv = document.getElementById("inputs")
+		let newDiv = document.createElement("div")
+		newDiv.setAttribute("class", wordCounter.toString())
+		let newInputs = []
+		for (let count = 0; count < 5; count++) {
+			newInputs[count] = document.createElement("input")
+			newInputs[count].setAttribute("type", "text")
+			newInputs[count].setAttribute("class", "box")
+			newInputs[count].setAttribute("maxlength", "1")
+			
+			newDiv.appendChild(newInputs[count])
+		}
+		mainDiv.appendChild(newDiv)
+	    }
+    })
+    </script>
+</html>

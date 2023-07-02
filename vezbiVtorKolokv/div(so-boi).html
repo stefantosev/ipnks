@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- RABOTI -->
+
+    <script>
+         function postaviDiv(){
+            var input = document.getElementById("vrednost").value //sekogas value
+            var vrednosti = input.split(",")
+
+            console.log(vrednosti)
+            
+            //pravime div za da go smestime vo html
+            var div = document.createElement("div")  //mora da kazheme kaj go stavame
+            var kontejner = document.getElementById("kontejner")
+            
+            div.style.background = vrednosti[0]
+            div.style.width = vrednosti[1] + "px"  //so px da se dodade
+            div.style.height = vrednosti[2] + "px"
+           
+            var tekst = vrednosti[3]
+            var bukvi = ""
+            for(var i=0; i<tekst.length; i++){
+                
+                if(i % 2==0){
+                    bukvi += tekst.charAt(i).toUpperCase()
+                }else{
+                    bukvi += tekst.charAt(i).toLowerCase()
+                }
+            }
+            
+            div.innerHTML = bukvi
+            //moze i samo vo body da se append nemora da se pravi div 
+            kontejner.appendChild(div)
+            
+            
+
+
+        }
+
+
+
+
+    </script>
+</head>
+
+<body>
+    <div> <input type="text" id="vrednost"> <input type="button" value="Постави" 
+        onclick="postaviDiv()"></div>
+    <div id="kontejner"></div>
+</body>
+</html>

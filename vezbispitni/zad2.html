@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .idk{
+            display: inline-block;
+            margin: 10px;
+            vertical-align: top;
+        }
+        .idk2{
+            display: inline-block;
+            margin-right: 50px;
+
+        }
+        table, th, td{
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 1px 10px;
+        }
+        .blok{
+            display: block;
+        }
+    </style>
+    <script>
+        var data = '[{"ime":"Nikola","prezime":"Nikolovski","id":"123","pol":"1","godini":"25","email":"vedan@yahoo.com","lokacija":"Skopje"},{"ime":"Angela","prezime":"Nikolovski","id":"123","pol":"2","godini":"15","email":"vedan@yahoo.com","lokacija":"Skopje"}]'
+        let newData=JSON.parse(data)
+    //    console.log(newData)
+
+        window.onload=function (){
+          for(var i=0;i<newData.length;i++)
+          {
+
+              var ime=newData[i].ime
+              var prezime=newData[i].prezime
+              var id=newData[i].id
+              var pol=newData[i].pol
+              var godini=newData[i].godini
+              var email=newData[i].email
+              var lokacija=newData[i].lokacija
+             //  console.log(ime)
+              var row=document.createElement("tr")
+              var table=document.getElementById('tuka')
+              var table2=document.getElementById('tuka2')
+
+               if(godini>=18){
+                  row.innerHTML="<td>"+ime+"</td>"+
+                      "<td>"+prezime+"</td>"+
+                      "<td>"+email+"</td>"+
+                      "<td>"+lokacija+"</td>"+
+                      "<button onclick='vakciniran(this)'>Vakciniran</button>"
+                  console.log(row)
+                  if(pol==1){
+                      row.style.backgroundColor="lightblue"
+                  }
+                  else if(pol==2)
+                      row.style.backgroundColor="pink"
+                  table.append(row)
+
+             }
+              else if(godini<18){
+                   row.innerHTML="<td>"+ime+"</td>"+
+                       "<td>"+prezime+"</td>"+
+                       "<td>"+email+"</td>"+
+                       "<td>"+lokacija+"</td>"+
+                       "<td><button onclick='vakciniran(this)'>Vakciniran</button></td>"
+                   console.log(row)
+                   if(pol==1){
+                       row.style.backgroundColor="lightblue"
+                   }
+                   else if(pol==2)
+                       row.style.backgroundColor="pink"
+
+                  table2.appendChild(row)
+              }
+          }
+        }
+        function myFunction() {
+            var ime = document.getElementById('ime').value
+            var maticen = document.getElementById('maticen').value
+            var godini = document.getElementById('godini').value
+            var lokacija = document.getElementById('lokacija').value
+            var prezime = document.getElementById('prezime').value
+            var email = document.getElementById('email').value
+
+            var row = document.createElement('tr')
+            var table = document.getElementById('tuka')
+            var table2 = document.getElementById('tuka2')
+
+            if (maticen.length != 13) {
+                alert("Ne e dobar maticniot")
+            }
+            if (proveriEmail(email) == false) {
+                alert("Ne e dobar mailot")
+            } else {
+                if (godini >= 18) {
+                    row.innerHTML = "<td>" + ime + "</td>" +
+                        "<td>" + prezime + "</td>" +
+                        "<td>" + email + "</td>" +
+                        "<td>" + lokacija + "</td>" +
+                        "<td><button onclick='vakciniran(this)'>Vakciniran</button></td>"
+                    console.log(row)
+                    if (document.getElementById('1').checked == true) {
+                        row.style.backgroundColor = "lightblue"
+                    } else if (document.getElementById('2').checked == true)
+                        row.style.backgroundColor = "pink"
+                    table.append(row)
+
+                } else if (godini < 18) {
+                    row.innerHTML = "<td>" + ime + "</td>" +
+                        "<td>" + prezime + "</td>" +
+                        "<td>" + email + "</td>" +
+                        "<td>" + lokacija + "</td>" +
+                        "<td><button onclick='vakciniran(this)'>Vakciniran</button></td>"
+                    console.log(row)
+                    if (document.getElementById('1').checked == true) {
+                        row.style.backgroundColor = "lightblue"
+                    } else if (document.getElementById('2').checked == true)
+                        row.style.backgroundColor = "pink"
+
+                    table2.appendChild(row)
+                }
+            }
+        }
+
+
+        function proveriEmail(email)
+        {
+            if(email.includes("@yahoo.com") || email.includes("@gmail.com"))
+                return true
+            else
+                return false
+        }
+
+        function vakciniran(ova){
+            var parent=ova.parentNode
+            parent.style.opacity=1;
+            var myInterval=setInterval(function (){
+                parent.style.opacity-=0.1
+            },100)
+
+            setTimeout(function (){//EVE KAKO SAMO EDEN DEL DA SE ISPECATI
+                clearInterval(myInterval)
+                //  var element=parent
+                //  element.style.opacity=1
+                var lista=document.getElementById('vakcinirani')
+                var li=document.createElement("li")
+                var li2=document.createElement("li")
+                li.innerHTML=parent.children[0].innerHTML
+                li2.innerHTML=parent.children[1].innerHTML
+
+                lista.append(li)
+                lista.append(li2)
+            },2000)
+        }
+    </script>
+</head>
+<body>
+<h1>Vakcina.mk</h1>
+<h3>Sajt za iskazuvanje interes za vakcina</h3>
+<div class="idk">
+    <label>Ime: </label>
+    <input type="text" id="ime"><br>
+    <label>Maticen broj: </label>
+    <input type="text" id="maticen"><br>
+    <label>Godini: </label>
+    <input type="text" id="godini"><br>
+    <label>lokacija: </label>
+    <select id="lokacija">
+        <option>Skopje</option>
+        <option>Kumanovo</option>
+        <option>Bitola</option>
+        <option>kumanovo</option>
+        <option>Tetovo</option>
+    </select>
+    <input type="button" value="Dodaj" onclick="myFunction()">
+</div>
+
+
+<div class="idk">
+    <label>Prezime: </label>
+    <input type="text" id="prezime"><br>
+    <label>Pol: </label>
+    <input type="radio" id="1" name="pol" value="1">Maski
+    <input type="radio" id="2" name="pol" value="2">Zenski<br>
+    <label>Email adresa: </label>
+    <input type="text" id="email">
+</div>
+    <div class="blok">
+<div class="idk2">
+    <h3>Maloletni</h3>
+    <table id="table">
+        <thead>
+        <th>Ime</th>
+        <th>Prezime</th>
+        <th>Adresa</th>
+        <th>Lokacija</th>
+        <th>Status</th>
+        </thead>
+        <tbody id="tuka">
+
+        </tbody>
+    </table>
+</div>
+
+<div class="idk2">
+    <h3>Polnoletni</h3>
+    <table id="table2">
+        <thead>
+        <th>Ime</th>
+        <th>Prezime</th>
+        <th>Adresa</th>
+        <th>Lokacija</th>
+        <th>Status</th>
+        </thead>
+
+        <tbody id="tuka2">
+
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div>
+    <h2>Vakcinirani</h2>
+    <ul id="vakcinirani"></ul>
+</div>
+</body>
+</html>

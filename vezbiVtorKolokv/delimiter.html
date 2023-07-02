@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- RABOTI (POLA)-->
+
+    <style>
+        
+        label{
+            display: inline-block;
+            width: 150px;
+            height: 50px;
+            margin-top: 5p;
+        }
+
+        #kopce{
+            margin-top: 20px;
+        }
+
+
+    </style>
+
+
+    <script>
+
+        function Crtaj(){
+
+            var colors = document.getElementById("colors").value
+            var delimiter = document.getElementById("delimiter").value
+            //mozelo vaka pocit
+            var razdeli = colors.split(delimiter)
+
+        
+            //za site vrednosti vneseni da smestue
+            for(var i=0; i<razdeli.length; i++){
+                var pole= document.createElement("div")
+                
+                pole.setAttribute("style", 
+                `background-color:${razdeli[i]};
+                width: ${parseInt(100) + 'px'};
+                height: ${parseInt(100) + 'px'};
+                display: inline-flex;`)
+
+                //da gi briseme
+                pole.setAttribute("onclick", "this.remove()")
+        
+                document.body.appendChild(pole)
+
+            }
+        }
+
+        function remove(){
+            
+        }
+
+    </script>
+</head>
+
+<body>
+    <div><label>Colors</label></div>
+    <div><input type="text" id="colors"></div>
+    <div><label>Delimiter</label></div>
+    <div><input type="text" id="delimiter"></div>
+    <div><input type="button" value="Draw" id="kopce" onclick="Crtaj()"></div>
+    <div class="pole"> </div>
+</body>
+</html>

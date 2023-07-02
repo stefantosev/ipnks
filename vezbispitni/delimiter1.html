@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #red{
+            font-style: bold;
+        }
+
+    </style>
+
+    <script>
+
+        function Kreiraj(){
+            var input = document.getElementById("input").value
+            var delimiter = document.getElementById("delimiter").value
+            var header = document.getElementById("header")
+            var telo = document.getElementById("telo")
+
+            var content = input.split("\n");
+
+            var red = document.createElement("tr")
+            red.innerHTML = "<td>Name</td>" + "<td>Surname</td>" + "<td>Index</td>"
+            red.setAttribute("id" ,"red");
+            header.append(red);
+            
+        }
+
+    </script>
+</head>
+<body>
+    <div><label>Text:</label><textarea id="input" cols="30" rows="10"></textarea></div>
+    <div><label>Delimiter:</label> <input type="text" id="delimiter"></div>
+    <div><input type="button" value="Create" id="kopce" onclick="Kreiraj()"></div>
+    <div>
+        <table>
+            <thead id="header">
+                    <tr></tr>
+            </thead>
+            <tbody id="telo">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

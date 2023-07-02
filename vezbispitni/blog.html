@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #izbrisanite{
+            position: absolute;
+            left: 700px;
+            display: flex;
+        }
+
+        table, thead, tbody, td, tr, th{
+            border: 3px solid black;
+            border-collapse: collapse;
+        }
+
+        #post{
+            display: flex;
+        }
+
+        #area{
+            height: 50px;
+        }
+
+        label{
+            display: inline-block;
+            width: 200px;
+            height: 25px;
+        }
+    </style>
+
+    <script>
+        //daden e json i da se parsira
+        var data = '[{"title":"FCSE announcement", "post":"FSCE is starting with classes this semestar from 15th Feb.", "type":"Free", "category":"Education", "published":true},{"title":"What is an NFT", "post":"An NFT, which stands for non-fungible token, is a unique unit of data employing technology that allows digital content to become logged and authenticated on cryptocurrency blockchains", "type":"Free", "category":"Science", "pusblished": false}]'
+        var parsed = JSON.parse(data)
+        console.log(parsed)  //parsirano si e
+
+
+        var brojac=0  //kolku publish posts ke ima
+
+        //koristime json za onload da testirame
+         function tabela(){
+            //so for gi vrtime site parsirani i dodavame vo tabela
+            for(var i=0; i<parsed.length; i++){
+                var title = parsed[i].title
+                var post = parsed[i].post
+                var type = parsed[i].type
+                var category = parsed[i].category
+
+                var dodavaj = document.getElementById("dodavaj")
+                var red = document.createElement("tr")
+
+                red.setAttribute("id", "row")
+
+                //primer od FCSE announcement dobivame -> fcse-announcement
+                var link = "finki.ukim.mk/" + title.toLowerCase().split(" ").join("-")
+
+                red.innerHTML = "<td>" + title + "</td>" +
+                                "<td>" + post + "</td>" + 
+                                "<td>" + link + "</td>" + 
+                                "<td>" + type + "</td>" +
+                                "<td>" + category + "</td>" +
+                                "<td><button id='publish' onclick='publish(this)'> Publish </button><br><button id='remove' onclick='remove(this)'>Remove</button></td>" 
+           
+                dodavaj.appendChild(red)
+             }
+        }
+
+        
+
+        function importiraj(){
+            var title = document.getElementById("title").value
+            var area = document.getElementById("area").value
+            var radio1 = document.getElementById("radio1")
+            var radio2 = document.getElementById("radio2")
+            var category = document.getElementById("category").value
+            var type
+
+            //samo da popolnuva ako se popolneti polinjata
+            if(title == "" || area =="" || (radio1.checked == false && radio2.checked == false) || category==""){
+                alert("Popolni gi site polinja!")
+                return
+            }
+            
+            //zavisno koj e selektiran type dobiva vrednost
+            if(radio1.checked == true){
+                type = radio1.value
+            }
+            else if(radio2.checked == true){
+                type = radio2.value
+            }
+            
+            var novRed = document.createElement("tr")
+            novRed.setAttribute("id", "row")
+            var novDodavaj = document.getElementById("dodavaj")
+
+            var link = "finki.ukim.mk/" + title.toLowerCase().split(" ").join("-")
+                
+            novRed.innerHTML = "<td>" + title + "</td>" +
+                            "<td>" + post + "</td>" + 
+                            "<td>" + link + "</td>" + 
+                            "<td>" + type + "</td>" +
+                            "<td>" + category + "</td>" +
+                            "<td> <button id='publish' onclick='publish(this)'> Publish </button><br> <button id='remove' onclick='remove(this)'>Remove</button> </td>" 
+            
+            novDodavaj.append(novRed)   
+        }
+
+        function publish(btn){
+            var red = btn.parentNode.parentNode //must
+
+            //ne raboti vaka
+            // var red1 = document.getElementById("row1")
+            // var red2 = document.getElementById("row2")
+
+            red.style.backgroundColor = "lightblue" 
+
+            btn.disabled = true //go onevozmozuvame kopceto
+
+            //komsicheto go onevozmozuvame
+            // var komsija = document.getElementById("remove")
+            // komsija.disabled = true
+            btn.nextElementSibling.nextElementSibling.disabled = true
+            
+            var objavi= document.getElementById("objavi")
+            brojac++
+            objavi.innerHTML = brojac
+        }
+
+        function remove(kopce){
+            var red = kopce.parentNode.parentNode
+
+            red.style.opacity = 1
+            //so animacija se brise i se osvezuva za nekoe vreme
+            var interval = setInterval(() => {
+                red.style.opacity -= 0.1
+            }, 200);
+            
+            setTimeout(() => {
+                clearInterval(interval)
+
+                var lista = document.getElementById("lista")
+                var list = document.createElement("li")
+
+                list.innerHTML = red.children[2].innerHTML
+
+                lista.append(list)
+                red.remove()
+            }, 2000)
+        }
+
+
+
+    </script>
+</head>
+<body onload="tabela()">
+
+    <div id="lista"><h1>Removed links</h1></div>
+    <div> 
+        <ul id="removed">
+            <!-- tuka stavame -->
+        </ul>
+    </div>
+
+    <div id="post"><h1>Post detail</h1></div>
+    <div><label>Title</label>  <input type="text" id="title"></div>
+    <div><label>Post</label>  <textarea id="area"></textarea></div>
+    <div><label>Content type</label> <input type="radio" name="c" value="Free" id="radio1">Free <input type="radio" name="c" value="Paid" id="radio2"> Paid</div>
+    <div><label>Category</label> 
+        <select id="category">
+            <option></option>
+            <option value="Science">Science</option>
+            <option value="Education">Education</option>
+            <option value="Industry">Industry</option>
+        </select>
+    </div>
+    <div><input type="button" value="Import post" id="kopce" onclick="importiraj();"></div>
+
+    <div><h1>Published posts <span id="objavi">0</span></h1></div>
+    <table id="published">
+        <thead>
+            <tr><th>Title</th> <th>Post</th> <th>Link</th> <th>Type</th> <th>Category</th> <th>Actions</th></tr>
+        </thead>
+        <tbody id="dodavaj">
+            <!-- tuka stavame -->
+        </tbody>
+    </table>
+
+    
+</body>
+</html>

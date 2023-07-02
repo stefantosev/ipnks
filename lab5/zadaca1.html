@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+
+        function kalkuliraj(){
+            a = document.getElementById("a").value
+            b = document.getElementById("b").value
+            newDiv = document.createElement("div")
+            
+            rezultat = 0
+           
+            //kalkulatorot
+            if(document.getElementById("add").checked){
+                rezultat = parseInt(a) + parseInt(b)
+            } 
+            else if(document.getElementById("subtract").checked){
+                rezultat = parseInt(a) - parseInt(b)
+            } 
+            else if(document.getElementById("multiply").checked){
+                rezultat = parseInt(a) * parseInt(b)
+            } 
+            else if(document.getElementById("divide").checked){
+                rezultat = parseInt(a) / parseInt(b)
+            } 
+            else if(document.getElementById("sin").checked){
+                rezultat =  Math.sin(parseInt(a))
+            } 
+            else if(document.getElementById("cos").checked){
+                rezultat = Math.cos(parseInt(a))
+            } 
+            else if(document.getElementById("tg").checked){
+                rezultat = Math.tan(parseInt(a))
+            } 
+            else if(document.getElementById("absolute").checked){
+                rezultat = Math.trunc(parseInt(a))
+            } 
+            else if(document.getElementById("square").checked){
+                rezultat = Math.pow(parseInt(a),parseInt(b))
+            } 
+            else if(document.getElementById("root").checked){
+                rezultat = Math.sqrt(parseInt(a))
+            } else{
+                alert("Не постоечки оператор") //ako ne se selektira kalkulator
+                return
+            }
+
+            document.body.innerHTML += "</br>" + rezultat
+        }
+
+    </script>
+</head>
+
+<body>
+        <h1>Калкулатор</h1>
+    
+        <div>
+            <label>a</label><input type="text" id="a">
+            <label>b</label><input type="text" id="b">
+        </div>
+    
+        <div>
+            <input type="radio" name="radio" id="add">a+b
+            <input type="radio" name="radio" id="subtract">a-b
+            <input type="radio" name="radio" id="multiply">a*b
+            <input type="radio" name="radio" id="divide">a/b
+        </div>
+        <div>
+            <input type="radio" name="radio" id="sin">sin(a)
+            <input type="radio" name="radio" id="cos">cos(a)
+            <input type="radio" name="radio" id="tg">tg(a)
+        </div>
+        <div>
+            <input type="radio" name="radio" id="absolute">[a]
+            <input type="radio" name="radio" id="square">a<sup>b</sup>
+            <input type="radio" name="radio" id="root">√a
+        </div>
+        <input type="button" onclick="kalkuliraj()" value="Пресметај">
+</body>
+</html>

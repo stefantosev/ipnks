@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+         table, thead, tbody, tr, td, th{
+            border: 3px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+        
+    <script>
+        var data = '[{"hoteli":[{"ime":"Monastero","od":"31.8.2021","do":"11.9.2021","sobi":3},{"ime":"Hotel 71","od":"1.9.2021","do":"3.9.2021","sobi":1},{"ime":"RAAS Jodhpur","od":"28.8.2021","do":"10.10.2021","sobi":10},{"ime":"Archer Hotel ","od":"1.8.2021","do":"1.10.2021","sobi":0},{"ime":"The Langham Huntington","od":"3.8.2021","do":"3.9.2021","sobi":5}]}]'
+        var parsed = JSON.parse(data)
+        console.log(parsed)
+
+
+        //gospod znae so se vie
+        function ekran(yearFrom, monthFrom, dayFrom, yearTo, monthTo, dayTo, brSoba){
+            //pristap do dvoen json 
+            //vrti niz site hoteli 
+            for(var i=0; i<parsed.length; i++){
+                //vrti vnatre vo hotelite
+                for(var j=0; j<parsed[0].length;j++){
+                    var ime = parsed[0].hoteli[j].ime
+                    var from = parsed[0].hoteli[j].od
+                    var to = parsed[0].hoteli[j].do
+                    var sobi = parsed[0].hoteli[j].sobi
+
+                    var newFrom = from.split(".")
+                    var newTo = to.split(".")
+                    var parsedSobi = parseInt(sobi)
+
+                    //pristap do godinite "od" date na from
+                    var parsedFromDay = parseInt(newFrom[0])
+                    var parsedFromMonth = parseInt(newFrom[1])
+                    var parsedFromYear = parseInt(newFrom[2])
+
+                     //pristap do godinite "do" date na from
+                    var parsedToDay = parseInt(newTo[0])
+                    var parsedToMonth = parseInt(newTo[1])
+                    var parsedToYear = parseInt(newTo[2])
+
+                  if((parsedFromMonth === monthFrom && parsedFromYear=== yearFrom) && (parsedToMonth<=monthTo && parsedToYear<=yearTo) && brSoba <= parsedSobi){
+                    if(parsedFromDay >= dayFrom && (parsedToDay <= dayTo || parsedToDay > dayTo)){
+                        
+                        var tabela = document.getElementById("tabela")
+                        var red = document.createElement("tr")
+
+                        red.innerHTML = "<td>" +from+ "</td>" +
+                                        "<td>" +to+ "</td>" +
+                                        "<td>" +sobi+ "</td>" +
+                                        "<td> <button onclick ='reserve(this)'>Reserve</button></td>" 
+                       
+                        tabela.append(red)
+                    }
+                  
+                }
+
+                else if( (parsedFromMonth>monthFrom && parsedFromYear>=yearFrom) &&  (parsedToMonth<=monthTo && parsedToYear<=yearTo) && brSoba<=parsedSobi){
+                    if((parsedFromDay < dayFrom || parsedFromDay>=dayFrom) && (parsedToDay <= dayTo || parsedToDay > dayTo)){
+                        var tabela = document.getElementById("tabela")
+                        var red = document.createElement("tr")
+
+                        red.innerHTML = "<td>" +from+ "</td>" +
+                                        "<td>" +to+ "</td>" +
+                                        "<td>" +sobi+ "</td>" +
+                                        "<td> <button onclick ='reserve(this)'>Reserve</button></td>" 
+                       
+                        tabela.append(red)
+                    }
+                }
+
+
+                }
+            }
+        }
+
+        function reserve(kopce){
+            alert("Rezervirano")
+            kopce.disabled = true
+
+            var red = kopce.parentNode.parentNode
+            red.style.backgroundColor = "green"
+        }
+
+        function baraj(){
+            var from = document.getElementById("od")
+            var to = document.getElementById("do")
+            var sobi = document.getElementById("sobi")
+
+            var razdeliFrom = from.value.split("-")
+            var razdeliTo = to.value.split("-")
+            var brSoba = parseInt(sobi.value)
+
+            //pristap do godinite "od" date na from
+            var yearFrom = parseInt(razdeliFrom[0])
+            var monthFrom = parseInt(razdeliFrom[1])
+            var dayFrom = parseInt(razdeliFrom[2])
+
+            //pristap do godinite "do" date na from
+            var yearTo= parseInt(razdeliTo[0])
+            var monthTo = parseInt(razdeliTo[1])
+            var dayTo = parseInt(razdeliTo[2])
+
+            var from1 = dayFrom + "." + monthFrom + "." + yearFrom
+            var to1 = dayTo + "." + monthTo + "." + yearTo
+
+
+            ekran(yearFrom, monthFrom, dayFrom, yearTo, monthTo, dayTo, brSoba)
+
+        }
+
+    </script>
+</head>
+<body>
+    <div><label>Od</label> <input type="date" value="2021-08-27" id="od">
+         <label>Do</label> <input type="date" value="2021-08-27" id="do">
+         <label>Broj na sobi</label> <input type="text" id="sobi" value="1">
+    </div>
+    <div><input type="button" onclick="baraj()" value="Prebaraj"></div>
+    <div>
+        <table id="tabela">
+            <thead>
+                <tr> <td>Ime</td> <td>Od</td> <td>Do</td> <td>Sobi</td></tr>
+            </thead>
+            <tbody>
+                <!-- da se dopolni -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+         label{
+            display: inline-block;
+            width: 150px;
+            height: 25px;
+        }
+        h1,h2{
+            text-align: center;
+        }
+
+        table, thead, tbody, td, tr, th{
+            border: 3px solid black;
+            border-collapse: collapse;
+        }
+
+    </style>
+
+
+    <script>
+
+        var data = '[{"ime":"Nikola","prezime":"Nikolovski","id":"123","pol":"1","godini":"25","email":"vedan@yahoo.com","lokacija":"Skopje"},{"ime":"Angela","prezime":"Nikolovski","id":"123","pol":"2","godini":"15","email":"vedan@yahoo.com","lokacija":"Skopje"}]';
+        var parsed = JSON.parse(data)
+        console.log(parsed)
+
+        function ekran(){
+            for(var i=0; i<parsed.length; i++){
+                var ime = parsed[i].ime
+                var prezime = parsed[i].prezime
+                var id = parsed[i].id
+                var pol = parsed[i].pol
+                var godini = parsed[i].godini
+                var email = parsed[i].email
+                var lokacija = parsed[i].lokacija
+
+                maloletni = document.getElementById("maloletni")
+                polnoletni = document.getElementById("polnoletni")
+                red = document.createElement("tr")
+
+                if(pol==2){
+                    red.style.backgroundColor = "lightpink"
+                }
+                if(pol==1){
+                    red.style.backgroundColor = "lightblue"
+                }
+
+                red.innerHTML += "<td>" + ime + "</td>" +
+                                "<td>" + prezime + "</td>" +
+                                "<td>" + email + "</td>" +
+                                "<td>" + lokacija + "</td>" +
+                                "<td><button onclick='isVakciniran(this)'>Вакциниран</button> </td>" 
+                
+                if(godini>=18){
+                    polnoletni.append(red)
+                }else{
+                    maloletni.append(red)
+                }
+
+
+            }
+        }
+
+
+        function dodaj(){
+
+            var ime = document.getElementById("ime").value
+            var prezime = document.getElementById("prezime").value
+            var maticen = document.getElementById("maticen").value
+            var godini = document.getElementById("godini").value
+            var email = document.getElementById("email").value
+            var lokacija = document.getElementById("lokacija")
+            var text = lokacija.options[lokacija.selectedIndex].text
+            var maski = document.getElementById("maski") //radio1
+            var zenski = document.getElementById("zenski") //radio2
+
+
+            if(ime=="" || prezime=="" || maticen=="" || godini=="" || godini=="" || email=="" || lokacija=="" || (maski.checked==false && zenski.checked==false)){
+                alert("Внесете ги сите податоци")
+                return;
+            }
+
+            if(isNaN(godini)){
+                alert("внесете соодветни години")
+                return;
+            }
+
+            if(maticen.length !=13 || isNaN(maticen)){
+                alert("внесете валиден матичен број")
+                return;
+            }
+
+            if(proverkaMail(email)){
+                alert("внесете валиден мејл")
+                return;
+            }
+
+            maloletni = document.getElementById("maloletni")
+            polnoletni = document.getElementById("polnoletni")
+            red = document.createElement("tr")
+
+            if(zenski.checked == true){
+                red.style.backgroundColor = "lightpink"
+            }
+            if(maski.checked == true){
+                red.style.backgroundColor = "lightblue"
+            }
+
+            red.innerHTML =    "<td>" + ime + "</td>" +
+                                "<td>" + prezime + "</td>" +
+                                "<td>" + email + "</td>" +
+                                "<td>" + text + "</td>" +
+                                "<td> <button onclick='isVakciniran(this)'>Вакциниран</button></td>" 
+            
+            if(godini>=18){
+                polnoletni.append(red)
+            }else{
+                maloletni.append(red)
+            }
+
+        }
+
+        function proverkaMail(email){
+            if(email.includes("@yahoo.com") || email.includes("@gmail.com")){
+                return false
+            }else{
+                return true
+            }
+        }
+
+
+        function isVakciniran(kopce){
+            var red = kopce.parentNode.parentNode
+            red.style.opacity = 1
+
+            var interval = setInterval(() =>{
+                if(red.style.opacity >= 0){
+                    red.style.opacity -= 0.3 //vidlivosta da se namalue za 0.3 s
+                }else{
+                    clearInterval(interval)
+                    red.remove()
+                    var lista = document.getElementById("lista")
+                    var element = document.createElement("li")
+                    
+                    element.innerHTML = red.children[0].innerHTML //go zimame imeto od tabelata i go stavame vo listata
+                    lista.append(element)
+                }
+            }, 90)
+        }
+
+    </script>
+</head>
+<body onload="ekran()">
+    <div><h1>Вакцина.мк</h1></div>
+    <div><h2>Сајт за искажување интересе за вакцина</h2></div>
+    <div><label>Име:</label> <input type="text" id="ime">  <label>Презиме:</label> <input type="text" id="prezime"></div>
+    <div><label>Матичен број:</label> <input type="text" id="maticen">  <label>Пол:</label> <input type="radio" name="rd" id="zenski">Женски <input type="radio" name="rd" id="maski"> Машки</div>
+    <div><label>Години:</label> <input type="text" id="godini"> <label>Email</label> <input type="text" id="email"></div>
+    <div><label>Локација:</label>  
+     <select id="lokacija">
+        <option value=""></option>
+        <option value="">Skopje</option>
+        <option value="">Bitola</option>
+        <option value="">Kumanovo</option>
+        <option value="">Tetovo</option>
+     </select> <input type="button" id="kopce" onclick="dodaj()" value="Додај"></div>
+
+    <div><h3>Пријавени малолетни</h3>
+        <table id="maloletni">
+            <thead>
+                <tr> <td>Име</td> <td>Презиме</td>  <td>Адреса</td> <td>Локација</td> <td>Статус</td></tr>
+            </thead>
+            <tbody >
+                <!-- da se dopolni vo js -->
+            </tbody>
+        </table>
+    </div>
+
+    <div><h3>Пријавени полнолетни</h3>
+        <table id="polnoletni">
+            <thead>
+                <tr> <td>Име</td> <td>Презиме</td>  <td>Адреса</td> <td>Локација</td> <td>Статус</td></tr>
+            </thead>
+            <tbody >
+                <!-- da se dopolni vo js -->
+            </tbody>
+        </table>
+    </div>
+
+    <div><h3>Вакцинирани</h3>
+        <ul id="lista">
+            <!-- da se dopolni vo js -->
+        </ul>
+    </div>
+</body>
+</html>

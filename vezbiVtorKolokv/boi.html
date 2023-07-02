@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- RABOTI-->
+
+    <script>
+        
+        function Prikazi(){
+
+            var input = document.getElementById("input").value
+            var razdeliZbor = input.split(" ")  //za povise prazni mesta ako ima
+
+            var nizaZborovi = []
+            var divovi = []
+
+            for(var i=0; i<razdeliZbor.length; i++){
+                var zbor = razdeliZbor[i].split(/\r?\n/)
+                zbor.forEach(element => nizaZborovi.push(element));
+                
+            }
+
+            console.log(input)
+            console.log(razdeliZbor)
+
+
+            var pole = document.getElementById("boi")
+            var DIVgolemina = 15 //startna vrednost
+
+            //vrtime niz zborot i pravime div
+            for(var i=0; i<nizaZborovi.length; i++){
+                boi = document.createElement("div")
+
+                //boi za site boi so gi ima random sekogas
+                var r = Math.floor(Math.random() * 255) 
+                var g = Math.floor(Math.random() * 255)
+                var b = Math.floor(Math.random() * 255)
+                rgbBoi = `rgb(${r}, ${b}, ${g})` //sintaksa za boja random
+                boi.style.color = rgbBoi
+                
+                
+                boi.style.height = DIVgolemina + "px"
+                boi.style.width = DIVgolemina + "px"
+                boi.innerHTML = nizaZborovi[i]
+               
+
+                //pozicioniranje
+                boi.style.position = "absolute"  //za mrdanje
+                boi.style.left = Math.random() * 2000 + "px"
+                boi.style.top = Math.random() * 2000 + "px"
+
+                //za golemina i kolku pati se pojavuva toj zbor
+                var broj = 0
+                for(var j=1; j<nizaZborovi.length-1; j++){
+                    if(nizaZborovi[j]==nizaZborovi[i]){
+                        broj+=20  
+                    }
+                }
+
+                broj*=4  //za pogolemi da bidat
+                boi.style.fontSize=broj+DIVgolemina+"px"
+                boi.style.fontSize=broj+DIVgolemina+"px"
+            
+                divovi.push(boi)
+                
+            }
+
+            //animacija 
+            setInterval(() => {
+                pole.appendChild(divovi.pop(boi))
+            }, 250);
+
+            //document.getElementById("input").style.display = "none"
+            //document.getElementById("kopce").style.display = "none"
+        }
+    </script>
+
+</head>
+<body>
+    <div><textarea name="pole" id="input" cols="30" rows="10"></textarea></div>
+    <div><input type="button" value="Прикажи" id="kopce" onclick="Prikazi()"></div>
+    
+    <!-- tuka ke vnesuvame boite animirani -->
+    <div id="boi"></div>
+</body>
+</html>

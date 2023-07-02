@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DatibamZadacata</title>
+
+    <style>
+        label{
+            display: inline-block;
+            width: 200px;
+            height: 25px;
+        }
+
+        #Div{
+            display: inline-block;
+            padding: 28px;
+            margin: 10px;
+            border: 1px solid black;
+            height: 220px;
+        }
+    </style>
+
+    <script>
+        //json string parsiranje
+        var data ='[{"ime":"Nikola","prezime":"Nikolovski","id":"NNN1asdfgh","promet":"1000"},{"ime":"Nikolina","prezime":"Nikolovska","id":"NNN2asdfgh","promet":"3000"}]' 
+        var parsedData = JSON.parse(data);
+        var vk = 0
+        console.log(parsedData)
+
+        //da se napise onload funkcija da se parsiraat podatocite od json stringot
+        function ekran(){
+            //pristap do nizata
+            for(var i=0; i<parsedData.length; i++){
+                var ime = parsedData[i].ime
+                var prezime = parsedData[i].prezime
+                var id = parsedData[i].id
+                var promet = parsedData[i].promet
+
+                var smetka = Math.floor(Math.random() * 100000) //brojot na smetkata random se dodava
+
+                var vnesi = document.getElementById("vnesi")
+                var Div = document.createElement("div")
+
+                Div.innerHTML += "<p>Сметка број: " + smetka + "</p>" +
+                                "<p>Име: " + ime + "</p>" + 
+                                "<p>Презиме: " + prezime + "</p>" +
+                                "<p>ID: " + id + "</p>" + 
+                                "<p>Промет: " + promet + "</p>" +
+                                "<input type='button' value='Плати' onclick='pay(this)'>"
+               
+                Div.setAttribute("id", "Div")
+
+                if(promet < 5000){
+                    Div.style.backgroundColor = "lightgreen"
+                }else{
+                    Div.style.backgroundColor = "red"
+                }
+
+                vnesi.append(Div)
+            } 
+        }
+
+        //funkcija za kopceto 
+        function zacuvaj(){
+
+            var ime = document.getElementById("ime").value
+            var prezime = document.getElementById("prezime").value
+            var id = document.getElementById("id").value
+            var promet = document.getElementById("promet").value
+
+             if(ime=="" || prezime=="" || id=="" || promet==""){
+                alert("Внесете ги полињата соодветно!")
+                return;
+            }
+
+
+            if(isNaN(promet)){
+                alert("Внесете валиден промет!")
+                return;
+            }
+
+            if(proverkaId(id)){
+                alert("Внесете валиден id број!")
+                return;
+            }
+
+            var smetka = Math.floor(Math.random() * 100000)
+
+            var vnesi = document.getElementById("vnesi")
+            var Div = document.createElement("div")
+
+            Div.innerHTML += "<p>Сметка број: " + smetka + "</p>" +
+                                "<p>Име: " + ime + "</p>" + 
+                                "<p>Презиме: " + prezime + "</p>" +
+                                "<p>ID: " + id + "</p>" + 
+                                "<p>Промет: " + promet + "</p>" +
+                                "<input type='button' value='Плати' onclick='pay(this)'>"
+               
+            Div.setAttribute("id", "Div")
+
+            if(promet < 5000){
+                Div.style.backgroundColor = "lightgreen"
+            }else{
+                Div.style.backgroundColor = "red"
+            }
+
+            vnesi.append(Div)
+
+        }
+
+        function proverkaId(id){
+        //da se proveri dali ima 10 cifri, barem 3 golemi bukvi i edna brojka
+            var golemi=0;
+            var broj=0;
+
+            //ako ima golemi bukvi i da ne e broj
+            for(var i=0; i<id.length;i++){
+                if(id[i].toUpperCase() === id[i] && isNaN(id[i])){
+                    golemi++;
+                }
+            }
+            
+            //ako ima broj
+            for(var i=0; i<id.length;i++){
+                if(!isNaN(id[i])){
+                    broj++;
+                }
+            }
+
+            //ako dolzinata e 10 i ima barem 3 golemi i eden broj
+            //vrakja 1 za alertot da se pojavi
+            if(id.length==10 && golemi>=3 && broj==1){
+                return 0
+            }else{
+                return 1
+            }
+        }
+
+        function pay(kopce){
+            var div1 = kopce.parentNode
+            div1.style.opacity = 1
+
+            var interval = setInterval(() => {
+                if(div1.style.opacity>=0){
+                    div1.style.opacity -= 0.1
+                }else{
+                    clearInterval(interval)
+
+                    div1.style.opacity = 1;
+                    var plateni = document.getElementById("plateni")
+                    var vkupno = document.getElementById("vkupno")
+
+                    kopce.disabled = true
+                    vk++
+                    vkupno.innerHTML = vk //vo divot vkupno go vnesuvame brojot 
+                    plateni.append(div1) 
+                }
+            }, 40)
+        }
+
+    </script>
+
+</head>
+<body onload="ekran()">
+    <div><h1>Систем за сметки</h1></div>
+    <div><label>Име:</label><input type="text" id="ime"></div>
+    <div><label>Презиме:</label><input type="text" id="prezime"></div>
+    <div><label>ID:</label><input type="text" id="id"></div>
+    <div><label>Промет:</label><input type="text" id="promet"></div>
+    <div><input type="button" id="kopce" value="Зачуваj" onclick="zacuvaj()"></div>
+
+    <div><h2>Внесени сметки</h2></div>
+    <div id="vnesi">
+        <!-- tuka dodavame -->
+    </div>
+
+    <div><h2>Платени сметки: <span id="vkupno">0</span></h2></div>
+    <div id="plateni"> 
+        <!-- tuka dodavame -->
+    </div>
+</body>
+</html>

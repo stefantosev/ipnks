@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div> <input type="button" value="<" onclick="klik('<')"> <input type="button" value=">" onclick="klik('>')"></div>
+
+    <script>
+        data = '[{"background-color":"red", "width":"100px", "height":"100px"}, {"background-color":"green", "width":"50px", "height":"100px"}, {"background-color":"blue", "width":"100px", "height":"50px"}]';
+        data = JSON.parse(data);
+
+        var napravi = document.createElement("div")
+        curr=0
+        napraviElement(curr)
+        //pravime div i zimame podatoci od json parsiraniot i gi delime na povekje
+       
+
+
+        function klik (direction){
+            if(direction==">"){
+                dviziDesno()
+            }
+            if(direction=="<"){ 
+                dviziLevo()
+            }
+        }
+
+      
+        function dviziDesno(){
+            pos = 0
+            interval = setInterval(function (){
+                pos +=10
+                napravi.style.left = pos + "px"
+
+                if(pos >=1500){
+                    pos=0
+                    napravi.style.left = "0px"
+                    if(curr >= data.length){
+                        curr = 0
+                    }
+                    clearInterval(interval)
+                    napraviElement(curr++)
+                }
+
+            },5)
+        }
+
+        function dviziLevo(){
+
+        }
+
+        function napraviElement(index){
+            var napravi = document.createElement("div")
+            napravi.style.background = data[index]["background-color"]
+            napravi.style.width = data[index].width
+            napravi.style.height = data[index].height
+            napravi.style.position = "absolute"
+
+            document.body.append(napravi)
+        }
+
+
+
+    </script>
+</body>
+</html>
